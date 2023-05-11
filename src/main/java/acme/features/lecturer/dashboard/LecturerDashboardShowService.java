@@ -15,6 +15,7 @@ package acme.features.lecturer.dashboard;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import acme.entities.lectures.LectureType;
 import acme.forms.LecturerDashboard;
 import acme.framework.components.accounts.Principal;
 import acme.framework.components.models.Tuple;
@@ -60,8 +61,8 @@ public class LecturerDashboardShowService extends AbstractService<Lecturer, Lect
 		Double minimumLearningTimePerCourse;
 		Double maximumLearningTimePerCourse;
 
-		totalNumberOfTheoryLectures = this.repository.totalNumberOfTheoryLectures(lecturerId);
-		totalNumberOfHandsOnLectures = this.repository.totalNumberOfHandsOnLectures(lecturerId);
+		totalNumberOfTheoryLectures = this.repository.totalNumberOfLecturesOfType(lecturerId, LectureType.THEORETICAL);
+		totalNumberOfHandsOnLectures = this.repository.totalNumberOfLecturesOfType(lecturerId, LectureType.HANDS_ON);
 		averageLearningTimePerLecture = this.repository.averageLearningTimePerLecture(lecturerId);
 		deviationLearningTimePerLecture = this.repository.deviationLearningTimePerLecture(lecturerId);
 		minimumLearningTimePerLecture = this.repository.minimumLearningTimePerLecture(lecturerId);
@@ -70,6 +71,9 @@ public class LecturerDashboardShowService extends AbstractService<Lecturer, Lect
 		deviationLearningTimePerCourse = this.repository.deviationLearningTimePerCourse(lecturerId);
 		minimumLearningTimePerCourse = this.repository.minimumLearningTimePerCourse(lecturerId);
 		maximumLearningTimePerCourse = this.repository.maximumLearningTimePerCourse(lecturerId);
+
+		System.out.println(totalNumberOfHandsOnLectures);
+		System.out.println(totalNumberOfTheoryLectures);
 
 		dashboard = new LecturerDashboard();
 		dashboard.setTotalNumberOfTheoryLectures(totalNumberOfTheoryLectures);
