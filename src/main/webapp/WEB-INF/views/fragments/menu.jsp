@@ -22,7 +22,6 @@
 			<acme:menu-suboption code="master.menu.any.course.list" action="/any/course/list"/>
   			<acme:menu-suboption code="master.menu.any.peep.list" action="/any/peep/list"/>
 			<acme:menu-suboption code="master.menu.any.banner.list" action="/any/banner/list"/>
-			<acme:menu-suboption code="master.menu.any.course.list" action="/any/course/list"/>
 		</acme:menu-option>
 		<acme:menu-option code="master.menu.anonymous" access="isAnonymous()">
 			<acme:menu-suboption code="master.menu.anonymous.favourite-link-1" action="https://www.wikipedia.org/"/>
@@ -50,7 +49,8 @@
 			<acme:menu-suboption code="master.menu.authenticated.practicum.list" action="/company/practicum/list"/>	
 			<acme:menu-suboption code="master.menu.authenticated.bulletins.list" action="/authenticated/bulletin/list"/>
 			<acme:menu-suboption code="master.menu.authenticated.offers.list" action="/authenticated/offer/list"/>
-			<acme:menu-suboption code="master.menu.authenticated.list-tutorial" action="/authenticated/tutorial/list" access="!hasRole('Assistant')"/>
+			<acme:menu-suboption code="master.menu.authenticated.tutorial.list" action="/authenticated/tutorial/list" access="!hasRole('Assistant')"/>
+			<acme:menu-suboption code="master.menu.authenticated.note.list" action="/authenticated/note/list"/>
 		</acme:menu-option>
 		
 		<acme:menu-option code="master.menu.company" access="hasRole('Company')">
@@ -64,11 +64,6 @@
 			<acme:menu-suboption code="master.menu.provider.favourite-link" action="http://www.example.com/"/>
 		</acme:menu-option>
 		
-		<acme:menu-option code="master.menu.authenticated" access="isAuthenticated()">
-			<acme:menu-suboption code="master.menu.authenticated.note" action="/authenticated/note/list"/>
-
-		</acme:menu-option>
-
 		<acme:menu-option code="master.menu.consumer" access="hasRole('Consumer')">
 			<acme:menu-suboption code="master.menu.consumer.favourite-link" action="http://www.example.com/"/>
 		</acme:menu-option>

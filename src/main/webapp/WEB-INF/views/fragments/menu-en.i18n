@@ -20,7 +20,7 @@ master.menu.sign-out = Sign out
 master.menu.any = Any
 master.menu.any.course.list = List courses
 master.menu.any.peep.list = List peeps
-master.menu.any.banner.list = Banners
+master.menu.any.banner.list = List banners
 
 # master.menu.anonymous #######################################################
 
@@ -41,23 +41,23 @@ master.menu.administrator.config = System config
 master.menu.administrator.populate-initial = Populate DB (initial)
 master.menu.administrator.populate-sample = Populate DB (samples)
 master.menu.administrator.shut-down = Shut down
-master.menu.administrator.bulletins.list = Bulletins
-master.menu.administrator.offers.list = Offers
-master.menu.administrator.banner.list = Banners
+master.menu.administrator.bulletins.list = List bulletins
+master.menu.administrator.offers.list = List offers
+master.menu.administrator.banner.list = List banners
 
 # master.menu.authenticated ########################################################
 
 master.menu.authenticated = Authenticated
-master.menu.authenticated.bulletins.list = Bulletins
-master.menu.authenticated.offers.list = Offers
-master.menu.authenticated.practicum.list = List Practicum
-master.menu.authenticated.list-tutorial = List Tutorials
-master.menu.authenticated.note = Notes
+master.menu.authenticated.bulletins.list = List bulletins
+master.menu.authenticated.offers.list = List offers
+master.menu.authenticated.practicum.list = List practicum
+master.menu.authenticated.tutorial.list = List tutorials
+master.menu.authenticated.note.list = List notes
 
 # master.menu.company ###################################################
 master.menu.company = Company
-master.menu.company.practicum.list = List Practicum 
-master.menu.company.practicumSession.list = List Practicum Sessions
+master.menu.company.practicum.list = List practicum 
+master.menu.company.practicumSession.list = List practicum sessions
 master.menu.company.dashboard = Company dashboard
 
 # master.menu.provider ########################################################
@@ -78,13 +78,13 @@ master.menu.consumer.favourite-link = Favourite link
 # master.menu.lecturer #######################################################
 
 master.menu.lecturer = Lecturer
-master.menu.lecturer.lecture.list = Lecture list
-master.menu.lecturer.course.list = Course list
+master.menu.lecturer.lecture.list = List lectures
+master.menu.lecturer.course.list = List courses
 master.menu.lecturer.dashboard = Lecturer dashboard
 
 # master.menu.assistant ##########################################################
 master.menu.assistant = Assistant
-master.menu.assistant.list-tutorial = List Tutorials
+master.menu.assistant.list-tutorial = List tutorials
 master.menu.assistant.assistant-dashboard = Dashboard
 
 # master.menu.user-account ####################################################
