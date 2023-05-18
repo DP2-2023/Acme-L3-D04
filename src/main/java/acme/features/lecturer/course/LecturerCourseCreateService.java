@@ -13,6 +13,7 @@
 package acme.features.lecturer.course;
 
 import java.util.Collection;
+import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -71,7 +72,7 @@ public class LecturerCourseCreateService extends AbstractService<Lecturer, Cours
 	public void bind(final Course object) {
 		assert object != null;
 
-		super.bind(object, "code", "title", "abstract$", "price", "furtherInformation");
+		super.bind(object, "code", "title", "abstract$", "furtherInformation");
 
 		final int lectureId = super.getRequest().getData("lecture", int.class);
 		final Lecture lecture = this.repository.findOneLectureById(lectureId);
@@ -85,15 +86,20 @@ public class LecturerCourseCreateService extends AbstractService<Lecturer, Cours
 		object.setPublished(false);
 
 		// Currency conversion
-		final Money sourcePrice = super.getRequest().getData("price", Money.class);
-		if (sourcePrice != null) {
+		final Locale locale = super.getRequest().getLocale();
+		final boolean isAcceptedFormat = CurrencyExchange.isAcceptedFormat(super.getRequest().getData().get("price").toString(), locale);
+
+		if (isAcceptedFormat) {
 			final String ratesString = this.repository.findOneConfigByKey("currencyExchangeRates");
 			final String systemCurrency = this.repository.findOneConfigByKey("systemCurrency");
-
 			final CurrencyExchange currencyExchange = new CurrencyExchange(ratesString, systemCurrency);
-			final Money targetPrice = currencyExchange.exchange(sourcePrice);
-			if (targetPrice != null)
-				object.setPrice(targetPrice);
+			final Money sourcePrice = super.getRequest().getData("price", Money.class);
+			object.setPrice(sourcePrice);
+			if (sourcePrice != null) {
+				final Money targetPrice = currencyExchange.exchange(sourcePrice);
+				if (targetPrice != null)
+					object.setPrice(targetPrice);
+			}
 		}
 
 	}
@@ -106,9 +112,6 @@ public class LecturerCourseCreateService extends AbstractService<Lecturer, Cours
 			final Course existing = this.repository.findOneCourseByCode(object.getCode());
 			super.state(existing == null, "code", "lecturer.course.form.error.duplicated");
 		}
-
-		if (!super.getBuffer().getErrors().hasErrors("price"))
-			super.state(object.getPrice().getAmount() >= 0, "price", "lecturer.course.form.error.negative-price");
 
 		final int lectureId = super.getRequest().getData("lecture", int.class);
 		final Lecture lecture = this.repository.findOneLectureById(lectureId);
@@ -145,11 +148,16 @@ public class LecturerCourseCreateService extends AbstractService<Lecturer, Cours
 		final String ratesString = this.repository.findOneConfigByKey("currencyExchangeRates");
 		final String systemCurrency = this.repository.findOneConfigByKey("systemCurrency");
 		final CurrencyExchange currencyExchange = new CurrencyExchange(ratesString, systemCurrency);
+		final Locale locale = super.getRequest().getLocale();
+		final boolean isAcceptedFormat = CurrencyExchange.isAcceptedFormat(super.getRequest().getData().get("price").toString(), locale);
 
 		if (!super.getBuffer().getErrors().hasErrors("price"))
-			if (object.getPrice() != null)
+			if (!isAcceptedFormat)
+				super.state(isAcceptedFormat, "price", "lecturer.course.form.error.not-accepted-format");
+			else if (object.getPrice() != null) {
 				super.state(currencyExchange.isAcceptedCurrency(object.getPrice()), "price", "lecturer.course.form.error.not-accepted-currency");
-			else
+				super.state(object.getPrice().getAmount() >= 0, "price", "lecturer.course.form.error.negative-price");
+			} else
 				super.state(object.getPrice() != null, "price", "lecturer.course.form.error.not-accepted-currency");
 	}
 

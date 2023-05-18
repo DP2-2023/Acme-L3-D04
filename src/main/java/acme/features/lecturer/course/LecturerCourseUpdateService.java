@@ -13,6 +13,7 @@
 package acme.features.lecturer.course;
 
 import java.util.Collection;
+import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -83,26 +84,30 @@ public class LecturerCourseUpdateService extends AbstractService<Lecturer, Cours
 	public void bind(final Course object) {
 		assert object != null;
 
-		super.bind(object, "title", "abstract$", "price", "furtherInformation");
+		super.bind(object, "title", "abstract$", "furtherInformation");
 
 		// Currency conversion
-		final Money sourcePrice = super.getRequest().getData("price", Money.class);
-		final String ratesString = this.repository.findOneConfigByKey("currencyExchangeRates");
-		final String systemCurrency = this.repository.findOneConfigByKey("systemCurrency");
+		final Locale locale = super.getRequest().getLocale();
+		final boolean isAcceptedFormat = CurrencyExchange.isAcceptedFormat(super.getRequest().getData().get("price").toString(), locale);
 
-		final CurrencyExchange currencyExchange = new CurrencyExchange(ratesString, systemCurrency);
-		final Money targetPrice = currencyExchange.exchange(sourcePrice);
-		if (targetPrice != null)
-			object.setPrice(targetPrice);
+		if (isAcceptedFormat) {
+			final String ratesString = this.repository.findOneConfigByKey("currencyExchangeRates");
+			final String systemCurrency = this.repository.findOneConfigByKey("systemCurrency");
+			final CurrencyExchange currencyExchange = new CurrencyExchange(ratesString, systemCurrency);
+			final Money sourcePrice = super.getRequest().getData("price", Money.class);
+			object.setPrice(sourcePrice);
+			if (sourcePrice != null) {
+				final Money targetPrice = currencyExchange.exchange(sourcePrice);
+				if (targetPrice != null)
+					object.setPrice(targetPrice);
+			}
+		}
 
 	}
 
 	@Override
 	public void validate(final Course object) {
 		assert object != null;
-
-		if (!super.getBuffer().getErrors().hasErrors("price"))
-			super.state(object.getPrice().getAmount() >= 0, "price", "lecturer.course.form.error.negative-price");
 
 		// Spam filter
 		String spamTerms = null;
@@ -134,9 +139,17 @@ public class LecturerCourseUpdateService extends AbstractService<Lecturer, Cours
 		final String ratesString = this.repository.findOneConfigByKey("currencyExchangeRates");
 		final String systemCurrency = this.repository.findOneConfigByKey("systemCurrency");
 		final CurrencyExchange currencyExchange = new CurrencyExchange(ratesString, systemCurrency);
+		final Locale locale = super.getRequest().getLocale();
+		final boolean isAcceptedFormat = CurrencyExchange.isAcceptedFormat(super.getRequest().getData().get("price").toString(), locale);
 
 		if (!super.getBuffer().getErrors().hasErrors("price"))
-			super.state(currencyExchange.isAcceptedCurrency(object.getPrice()), "price", "lecturer.course.form.error.not-accepted-currency");
+			if (!isAcceptedFormat)
+				super.state(isAcceptedFormat, "price", "lecturer.course.form.error.not-accepted-format");
+			else if (object.getPrice() != null) {
+				super.state(currencyExchange.isAcceptedCurrency(object.getPrice()), "price", "lecturer.course.form.error.not-accepted-currency");
+				super.state(object.getPrice().getAmount() >= 0, "price", "lecturer.course.form.error.negative-price");
+			} else
+				super.state(object.getPrice() != null, "price", "lecturer.course.form.error.not-accepted-currency");
 
 	}
 

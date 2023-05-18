@@ -15,16 +15,14 @@ package acme.features.lecturer.dashboard;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import acme.entities.lectures.LectureType;
 import acme.framework.repositories.AbstractRepository;
 
 @Repository
 public interface LecturerDashboardRepository extends AbstractRepository {
 
-	@Query("select count(l) from Lecture l where l.type = 'THEORETICAL' and l.lecturer.id = :lecturerId")
-	Integer totalNumberOfTheoryLectures(int lecturerId);
-
-	@Query("select count(l) from Lecture l where l.type = 'HANDS_ON' and l.lecturer.id = :lecturerId")
-	Integer totalNumberOfHandsOnLectures(int lecturerId);
+	@Query("select count(l) from Lecture l where l.type = :type and l.lecturer.id = :lecturerId")
+	Integer totalNumberOfLecturesOfType(int lecturerId, LectureType type);
 
 	@Query("select avg(l.learningTime) from Lecture l where l.lecturer.id = :lecturerId")
 	Double averageLearningTimePerLecture(int lecturerId);

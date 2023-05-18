@@ -1,4 +1,12 @@
 key,code,title,abstract$,type,price,further-information,is-published
-course-01,AAA 000,"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tem","Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore",THEORETICAL,EUR 10.99,,true
-course-02,Z 999,"A","A",HANDS_ON,EUR 0.01,"http://www.example.es/",false
-course-03,NX 651,"On the balance of balances","A course on balance and balances",BALANCED,EUR 999.99,"http://www.example.es/",false
+course-01,AAA 000,"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tem","Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore",THEORETICAL,EUR 10.99,,false
+course-02,Z 999,A,A,HANDS_ON,EUR 0.01,http://www.example.es/,false
+course-03,NX 651,On the balance of balances,A course on balance and balances,BALANCED,EUR 999.99,http://www.example.es/,true
+course-04,Z 001,Test Add Lecture,Test description,HANDS_ON,EUR 10.00,,false
+course-05,Z 002,Test Delete,Test description,HANDS_ON,EUR 10.00,,false
+course-06,Z 003,Test Publish Pos. 1,Publish HANDS_ON course,HANDS_ON,EUR 10.00,,false
+course-07,Z 004,Test Publish Pos. 2,Publish BALANCED course,BALANCED,EUR 10.00,,false
+course-08,Z 005,Test Publish Neg. 1,Not Publish THEORETICAL course,THEORETICAL,EUR 10.00,,false
+course-09,Z 006,Test Publish Neg. 2,Not Publish with unpublished lectures,HANDS_ON,EUR 10.00,,false
+course-10,Z 007,Test Remove Lecture,Test description,HANDS_ON,EUR 10.00,,false
+course-11,Z 008,Test Update,Test description,HANDS_ON,EUR 10.00,,false
