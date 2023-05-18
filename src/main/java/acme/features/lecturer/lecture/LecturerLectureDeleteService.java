@@ -16,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import acme.entities.lectures.Lecture;
+import acme.entities.lectures.LectureType;
+import acme.framework.components.jsp.SelectChoices;
 import acme.framework.components.models.Tuple;
 import acme.framework.services.AbstractService;
 import acme.roles.Lecturer;
@@ -71,7 +73,7 @@ public class LecturerLectureDeleteService extends AbstractService<Lecturer, Lect
 	public void bind(final Lecture object) {
 		assert object != null;
 
-		super.bind(object, "title", "abstract$", "learningTime", "body", "type", "furtherInformation");
+		super.bind(object, "title", "abstract$", "learningTime", "body", "type", "furtherInformation", "isPublished");
 
 	}
 
@@ -94,9 +96,13 @@ public class LecturerLectureDeleteService extends AbstractService<Lecturer, Lect
 	public void unbind(final Lecture object) {
 		assert object != null;
 
+		SelectChoices choices;
 		Tuple tuple;
 
-		tuple = super.unbind(object, "title", "abstract$", "learningTime", "body", "type", "furtherInformation, isPublished");
+		choices = SelectChoices.from(LectureType.class, object.getType());
+
+		tuple = super.unbind(object, "title", "abstract$", "learningTime", "body", "type", "furtherInformation", "isPublished");
+		tuple.put("types", choices);
 
 		super.getResponse().setData(tuple);
 	}
