@@ -108,12 +108,16 @@ public class LecturerCourseAddLectureService extends AbstractService<Lecturer, C
 	public void validate(final Course object) {
 		assert object != null;
 
+		final Lecturer lecturer;
+		lecturer = this.repository.findOneLecturerById(super.getRequest().getPrincipal().getActiveRoleId());
 		final int lectureId = super.getRequest().getData("lecture", int.class);
 		final Lecture lecture = this.repository.findOneLectureById(lectureId);
 
 		if (!super.getBuffer().getErrors().hasErrors("lecture"))
 			super.state(lecture != null, "lecture", "lecturer.course.form.error.lecture");
 
+		if (!super.getBuffer().getErrors().hasErrors("lecture"))
+			super.state(lecture.getLecturer().equals(lecturer), "lecture", "lecturer.course.form.error.not-your-lecture");
 	}
 
 	@Override
