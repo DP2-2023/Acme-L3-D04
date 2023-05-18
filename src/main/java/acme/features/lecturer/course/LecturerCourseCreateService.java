@@ -101,13 +101,6 @@ public class LecturerCourseCreateService extends AbstractService<Lecturer, Cours
 					object.setPrice(targetPrice);
 			}
 		}
-		//		else {
-		//			final Money price = new Money();
-		//			price.setAmount(0.);
-		//			final String systemCurrency = this.repository.findOneConfigByKey("systemCurrency");
-		//			price.setCurrency(systemCurrency);
-		//			object.setPrice(price);
-		//		}
 
 	}
 
