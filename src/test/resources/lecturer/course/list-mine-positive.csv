@@ -1,0 +1,4 @@
+recordIndex,code,title,type,is-published
+0,AAA 000,"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tem",THEORETICAL,False
+1,NX 651,"On the balance of balances",BALANCED,True
+2,Z 001,"Test Add Lecture",HANDS_ON,False

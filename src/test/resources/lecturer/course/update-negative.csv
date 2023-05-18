@@ -1,0 +1,11 @@
+recordIndex,code,title,abstract$,type,price,furtherInformation,isPublished
+9,Z 008,,,,,,,---
+9,Z 008,"","Test Blank title",HANDS_ON,USD 10.00,,false
+9,Z 008,"Test Bad URL","A",HANDS_ON,GBP 10.00,"wwwexamplecom",false,Test Lecture 2
+9,Z 008,"Test Desc. too long","Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore too long",HANDS_ON,GBP 10.00,"http://www.example.com",false
+9,Z 008,"Test Neg. price","Test description",HANDS_ON,EUR -10.00,,false
+9,Z 008,"Test Unsupported currency","Test description",HANDS_ON,AUD 10.00,,false
+9,Z 008,"Test Bad currency format","Test description",HANDS_ON,AAAA,,false
+9,Z 008,"Test Spam on desc","Test viagra",HANDS_ON,USD 0,,false
+9,Z 008,"Test Spam on title and desc one million","Test viagra",HANDS_ON,EUR 10.00,,false
+9,Z 008,"Test Many errors viagra","Test description cialis",HANDS_ON,AUD -10.00,,false

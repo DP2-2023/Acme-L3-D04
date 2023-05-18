@@ -1,0 +1,13 @@
+recordIndex,title,abstract$,learning-time,body,type,furtherInformation,isPublished
+0,,,,,---,,
+0,"","Test Blank title",10.00,"Test body",HANDS_ON,,False
+0,"Test Bad URL","Test description",10.00,"Test body",THEORETICAL,wwwexamplecom,False
+0,"Test Test Desc. too long","Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore too long",10.00,"Test body",HANDS_ON,,False
+0,"Test Body too long","A",10.00,"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore too long",THEORETICAL,"http://www.example.com",False
+0,"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tem too long","Test title too long",10.00,"Test body",THEORETICAL,"http://www.example.com",False
+0,"Test Neg. learning time","A",-10.00,"Test body",HANDS_ON,"http://www.example.com",False
+0,"Test spam on title viagra","A",10.00,"Test body",THEORETICAL,"http://www.example.com",False
+0,"Test Spam on desc","Spam on desc. you've won",10.00,"Test body",HANDS_ON,"http://www.example.com",False
+0,"Test Spam on body","A",10.00,"Spam on cialis body",THEORETICAL,"http://www.example.com",False
+0,"Test no type","A",10.00,"Test body",---,"http://www.example.com",False
+0,"Test Many errors viagra","",-10.00,"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore too long",---,"wwwexamplecom",False
