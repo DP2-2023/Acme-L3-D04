@@ -55,4 +55,7 @@ public interface AnyPeepRepository extends AbstractRepository {
 		return result;
 	}
 
+	@Query("select c.value from Config c where c.configKey = :key")
+	String findOneConfigByKey(String key);
+
 }

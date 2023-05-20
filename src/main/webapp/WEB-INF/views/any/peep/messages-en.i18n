@@ -16,3 +16,5 @@ any.peep.list.label.email = Email
 any.peep.list.label.link = Link
 
 any.peep.list.button.publish = Publish
+
+any.peep.form.error.spam = You cannot input spam
