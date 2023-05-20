@@ -11,12 +11,13 @@ import acme.framework.components.accounts.Authenticated;
 import acme.framework.components.models.Tuple;
 import acme.framework.helpers.MomentHelper;
 import acme.framework.services.AbstractService;
+import spamfilter.SpamFilter;
 
 @Service
 public class AuthenticatedNotesCreateService extends AbstractService<Authenticated, Note> {
 
 	@Autowired
-	protected AuthenticatedNotesRepository notesRepository;
+	protected AuthenticatedNotesRepository repository;
 
 
 	@Override
@@ -62,13 +63,43 @@ public class AuthenticatedNotesCreateService extends AbstractService<Authenticat
 		confirmation = super.getRequest().getData("confirmation", boolean.class);
 		super.state(confirmation, "confirmation", "javax.validation.constraints.AssertTrue.message");
 
+		// Spam filter
+		String spamTerms = null;
+		final String spamTermsES = this.repository.findOneConfigByKey("spamTermsES");
+		final String spamTermsEN = this.repository.findOneConfigByKey("spamTermsEN");
+		final Float threshold = Float.valueOf(this.repository.findOneConfigByKey("spamThreshold"));
+
+		if (spamTermsES != null && !spamTermsES.trim().isEmpty()) {
+			spamTerms = spamTermsES;
+			if (spamTermsEN != null && !spamTermsEN.trim().isEmpty())
+				spamTerms = spamTerms + "," + spamTermsEN;
+		} else if (spamTermsEN != null && !spamTermsEN.trim().isEmpty())
+			spamTerms = spamTermsEN;
+
+		if (spamTerms != null && threshold != null) {
+			final SpamFilter spamFilter = new SpamFilter(spamTerms, threshold);
+			final String formError = "authenticated.notes.form.error.spam";
+
+			if (!super.getBuffer().getErrors().hasErrors("title"))
+				super.state(!spamFilter.isSpam(object.getTitle()), "title", formError);
+
+			if (!super.getBuffer().getErrors().hasErrors("message"))
+				super.state(!spamFilter.isSpam(object.getMessage()), "message", formError);
+
+			if (!super.getBuffer().getErrors().hasErrors("email"))
+				super.state(!spamFilter.isSpam(object.getEmail()), "email", formError);
+
+			if (!super.getBuffer().getErrors().hasErrors("link"))
+				super.state(!spamFilter.isSpam(object.getLink()), "link", formError);
+		}
+
 	}
 
 	@Override
 	public void perform(final Note object) {
 		assert object != null;
 
-		this.notesRepository.save(object);
+		this.repository.save(object);
 	}
 
 	@Override
@@ -79,7 +110,7 @@ public class AuthenticatedNotesCreateService extends AbstractService<Authenticat
 
 		tuple = super.unbind(object, "moment", "title", "author", "message", "email", "link");
 
-		tuple.put("confirmation", true);
+		tuple.put("confirmation", false);
 
 		super.getResponse().setData(tuple);
 	}

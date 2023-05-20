@@ -31,3 +31,7 @@ administrator.offer.list.button.create = Create
 administrator.offer.form.button.create = Create
 administrator.offer.form.button.update = Update
 administrator.offer.form.button.delete = Delete
+
+administrator.offer.form.error.spam = You cannot input spam
+administrator.offer.form.error.not-accepted-currency = The input is not in an accepted currency
+administrator.offer.form.error.not-accepted-format = The input is not in an accepted format

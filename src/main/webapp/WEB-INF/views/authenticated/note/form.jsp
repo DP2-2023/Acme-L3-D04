@@ -17,10 +17,10 @@
 
 <acme:form>
 	<acme:input-textbox code="authenticated.notes.form.label.title" path="title"/>
-	<acme:input-textarea code="authenticated.notes.form.label.moment" path="moment" readonly="true"/>
-	<acme:input-textarea code="authenticated.notes.form.label.author" path="author"/>
+	<acme:input-textbox code="authenticated.notes.form.label.moment" path="moment" readonly="true"/>
+	<acme:input-textbox code="authenticated.notes.form.label.author" path="author"/>
 	<acme:input-textarea code="authenticated.notes.form.label.message" path="message"/>
-	<acme:input-textarea code="authenticated.notes.form.label.email" path="email"/>
+	<acme:input-textbox code="authenticated.notes.form.label.email" path="email"/>
 	<acme:input-url code="authenticated.notes.form.label.link" path="link"/>
 	<jstl:if test="${!readonly}">
 		<acme:input-checkbox code="authenticated.notes.form.label.confirmation" path="confirmation"/>

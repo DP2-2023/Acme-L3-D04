@@ -15,3 +15,5 @@ authenticated.notes.list.button.create = Create
 authenticated.notes.form.button.create = Create
 
 authenticated.notes.form.label.confirmation = Confirm
+
+authenticated.notes.form.error.spam = You cannot input spam
