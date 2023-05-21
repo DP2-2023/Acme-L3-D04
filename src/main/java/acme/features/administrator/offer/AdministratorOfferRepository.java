@@ -29,4 +29,7 @@ public interface AdministratorOfferRepository extends AbstractRepository {
 	@Query("select o from Offer o")
 	Collection<Offer> findRecentOffers();
 
+	@Query("select c.value from Config c where c.configKey = :key")
+	String findOneConfigByKey(String key);
+
 }

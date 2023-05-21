@@ -17,13 +17,17 @@
 
 <acme:form>
 	<acme:input-textbox code="authenticated.notes.form.label.title" path="title"/>
-	<acme:input-textarea code="authenticated.notes.form.label.moment" path="moment" readonly="true"/>
-	<acme:input-textarea code="authenticated.notes.form.label.author" path="author"/>
+	<acme:input-moment code="authenticated.notes.form.label.moment" path="moment" readonly="true"/>
+	<acme:input-textbox code="authenticated.notes.form.label.author" path="author" readonly="true"/>
+	<jstl:if  test="${_command == 'create'}">
+		<acme:input-textbox code="authenticated.notes.form.label.name" path="name"/>
+		<acme:input-textbox code="authenticated.notes.form.label.surname" path="surname"/>
+	</jstl:if>
 	<acme:input-textarea code="authenticated.notes.form.label.message" path="message"/>
-	<acme:input-textarea code="authenticated.notes.form.label.email" path="email"/>
+	<acme:input-textbox code="authenticated.notes.form.label.email" path="email"/>
 	<acme:input-url code="authenticated.notes.form.label.link" path="link"/>
-	<jstl:if test="${!readonly}">
+	<jstl:if test="${_command == 'create'}">
 		<acme:input-checkbox code="authenticated.notes.form.label.confirmation" path="confirmation"/>
- 		<acme:submit test="${_command == 'create'}" code="authenticated.notes.form.button.create" action="/authenticated/note/create"/>
+ 		<acme:submit code="authenticated.notes.form.button.create" action="/authenticated/note/create"/>
  	</jstl:if>
 </acme:form>

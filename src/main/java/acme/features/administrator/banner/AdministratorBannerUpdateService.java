@@ -13,6 +13,7 @@ import acme.framework.components.accounts.Administrator;
 import acme.framework.components.models.Tuple;
 import acme.framework.helpers.MomentHelper;
 import acme.framework.services.AbstractService;
+import spamfilter.SpamFilter;
 
 @Service
 public class AdministratorBannerUpdateService extends AbstractService<Administrator, Banner> {
@@ -72,6 +73,27 @@ public class AdministratorBannerUpdateService extends AbstractService<Administra
 
 		periodValidation = end.before(DateUtils.addDays(start, 7));
 		super.state(!periodValidation, "periodValidation", "javax.validation.constraints.AssertTrue.message");
+
+		// Spam filter
+		String spamTerms = null;
+		final String spamTermsES = this.repository.findOneConfigByKey("spamTermsES");
+		final String spamTermsEN = this.repository.findOneConfigByKey("spamTermsEN");
+		final Float threshold = Float.valueOf(this.repository.findOneConfigByKey("spamThreshold"));
+
+		if (spamTermsES != null && !spamTermsES.trim().isEmpty()) {
+			spamTerms = spamTermsES;
+			if (spamTermsEN != null && !spamTermsEN.trim().isEmpty())
+				spamTerms = spamTerms + "," + spamTermsEN;
+		} else if (spamTermsEN != null && !spamTermsEN.trim().isEmpty())
+			spamTerms = spamTermsEN;
+
+		if (spamTerms != null && threshold != null) {
+			final SpamFilter spamFilter = new SpamFilter(spamTerms, threshold);
+			final String formError = "administrator.banner.form.error.spam";
+
+			if (!super.getBuffer().getErrors().hasErrors("slogan"))
+				super.state(!spamFilter.isSpam(object.getSlogan()), "slogan", formError);
+		}
 	}
 
 	@Override

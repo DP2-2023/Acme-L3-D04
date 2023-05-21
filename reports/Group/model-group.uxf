@@ -153,7 +153,7 @@ Peep
 + nick: String {NotBlank}
 + message: String {NotBlank}
 + email: String {Email}
-- link: String {URL}
++ link: String {URL}
 
 bg=green</panel_attributes>
     <additional_attributes/>
@@ -173,7 +173,7 @@ Bulletin
 + title: String {NotBlank}
 + message: String {NotBlank}
 + critical: boolean
-- link: String {URL}
++ link: String {URL}
 
 bg=green</panel_attributes>
     <additional_attributes/>
@@ -217,7 +217,7 @@ Note
 + author: String {NotBlank}
 + message: String {NotBlank}
 + email: String {Email}
-- link: String {URL}
++ link: String {URL}
 
 bg=green</panel_attributes>
     <additional_attributes/>
@@ -309,10 +309,10 @@ full name.
       <h>99</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Entity&gt;&gt;
-Currency
+Config
 --
-+ currency: String {NotBlank}
-+ isSystemCurrency: boolean {NotNull}
++ configKey: String {NotBlank}
++ value: String {NotBlank}
 
 
 bg=green</panel_attributes>
