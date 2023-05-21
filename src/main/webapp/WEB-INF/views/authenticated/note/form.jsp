@@ -17,7 +17,7 @@
 
 <acme:form>
 	<acme:input-textbox code="authenticated.notes.form.label.title" path="title"/>
-	<acme:input-textbox code="authenticated.notes.form.label.moment" path="moment" readonly="true"/>
+	<acme:input-moment code="authenticated.notes.form.label.moment" path="moment" readonly="true"/>
 	<acme:input-textbox code="authenticated.notes.form.label.author" path="author" readonly="true"/>
 	<jstl:if  test="${_command == 'create'}">
 		<acme:input-textbox code="authenticated.notes.form.label.name" path="name"/>

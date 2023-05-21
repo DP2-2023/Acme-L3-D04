@@ -17,7 +17,7 @@
 
 <acme:form readonly="${readonly}">
 	<jstl:if test="${acme:anyOf(_command, 'show|update|delete')}">
-		<acme:input-textbox code="administrator.offer.form.label.moment" path="moment" readonly="true"/>	
+		<acme:input-moment code="administrator.offer.form.label.moment" path="moment" readonly="true"/>	
 	</jstl:if>
 	<acme:input-textbox code="administrator.offer.form.label.heading" path="heading"/>
 	<acme:input-textarea code="administrator.offer.form.label.summary" path="summary"/>
