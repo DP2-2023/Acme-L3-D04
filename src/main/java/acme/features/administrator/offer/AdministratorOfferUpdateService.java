@@ -50,7 +50,7 @@ public class AdministratorOfferUpdateService extends AbstractService<Administrat
 	public void bind(final Offer object) {
 		assert object != null;
 
-		super.bind(object, "heading", "summary", "offerStartDate", "offerEndDate", "link");
+		super.bind(object, "heading", "summary", "offerStartDate", "offerEndDate", "price", "link");
 
 		// Currency conversion
 		final Locale locale = super.getRequest().getLocale();
