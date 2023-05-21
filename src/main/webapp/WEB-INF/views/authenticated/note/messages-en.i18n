@@ -7,6 +7,8 @@ authenticated.notes.list.label.message = message
 authenticated.notes.form.label.title = title
 authenticated.notes.form.label.moment = moment
 authenticated.notes.form.label.author = author
+authenticated.notes.form.label.name = name
+authenticated.notes.form.label.surname = surname
 authenticated.notes.form.label.message = message
 authenticated.notes.form.label.email = email
 authenticated.notes.form.label.link = link
@@ -17,3 +19,4 @@ authenticated.notes.form.button.create = Create
 authenticated.notes.form.label.confirmation = Confirm
 
 authenticated.notes.form.error.spam = You cannot input spam
+authenticated.notes.form.error.blank = Must not be blank

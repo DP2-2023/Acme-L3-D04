@@ -1,11 +1,13 @@
-authenticated.notes.list.label.title = titulo
+authenticated.notes.list.label.title = título
 authenticated.notes.list.label.moment = momento
 authenticated.notes.list.label.author = autor
 authenticated.notes.list.label.message = mensaje
 
-authenticated.notes.form.label.title = titulo
+authenticated.notes.form.label.title = título
 authenticated.notes.form.label.moment = momento
 authenticated.notes.form.label.author = autor
+authenticated.notes.form.label.name = nombre
+authenticated.notes.form.label.surname = apellidos
 authenticated.notes.form.label.message = mensaje
 authenticated.notes.form.label.email = email
 authenticated.notes.form.label.link = link
@@ -16,3 +18,4 @@ authenticated.notes.form.button.Crear = Crear
 authenticated.notes.form.label.confirmation = Confirmar
 
 authenticated.notes.form.error.spam = No puede introducir spam
+authenticated.notes.form.error.blank = No puede estar en blanco

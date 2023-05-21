@@ -52,7 +52,14 @@ public class AuthenticatedNotesCreateService extends AbstractService<Authenticat
 	public void bind(final Note object) {
 		assert object != null;
 
-		super.bind(object, "moment", "title", "author", "message", "email", "link");
+		super.bind(object, "moment", "title", "message", "email", "link");
+
+		final String name = super.getRequest().getData("name", String.class);
+		final String surname = super.getRequest().getData("surname", String.class);
+		final String username = super.getRequest().getPrincipal().getUsername();
+
+		object.setAuthor(String.format("%s - %s, %s", username, surname, name));
+
 	}
 
 	@Override
@@ -62,6 +69,16 @@ public class AuthenticatedNotesCreateService extends AbstractService<Authenticat
 
 		confirmation = super.getRequest().getData("confirmation", boolean.class);
 		super.state(confirmation, "confirmation", "javax.validation.constraints.AssertTrue.message");
+
+		final String name = super.getRequest().getData("name", String.class);
+		final String surname = super.getRequest().getData("surname", String.class);
+
+		// Name and surname
+		if (!super.getBuffer().getErrors().hasErrors("name"))
+			super.state(!name.trim().isEmpty(), "name", "authenticated.notes.form.error.blank");
+
+		if (!super.getBuffer().getErrors().hasErrors("surname"))
+			super.state(!surname.trim().isEmpty(), "surname", "authenticated.notes.form.error.blank");
 
 		// Spam filter
 		String spamTerms = null;
@@ -82,6 +99,9 @@ public class AuthenticatedNotesCreateService extends AbstractService<Authenticat
 
 			if (!super.getBuffer().getErrors().hasErrors("title"))
 				super.state(!spamFilter.isSpam(object.getTitle()), "title", formError);
+
+			if (!super.getBuffer().getErrors().hasErrors("author"))
+				super.state(!spamFilter.isSpam(object.getAuthor()), "author", formError);
 
 			if (!super.getBuffer().getErrors().hasErrors("message"))
 				super.state(!spamFilter.isSpam(object.getMessage()), "message", formError);
