@@ -41,7 +41,7 @@ public class AssistantTutorialUpdateService extends AbstractService<Assistant, T
 		masterId = super.getRequest().getData("id", int.class);
 		tutorial = this.repository.findOneTutorialById(masterId);
 		assistant = tutorial == null ? null : tutorial.getAssistant();
-		status = tutorial != null && super.getRequest().getPrincipal().hasRole(assistant);
+		status = tutorial != null && !tutorial.isPublished() && super.getRequest().getPrincipal().hasRole(assistant);
 
 		super.getResponse().setAuthorised(status);
 	}
@@ -97,7 +97,7 @@ public class AssistantTutorialUpdateService extends AbstractService<Assistant, T
 		courses = this.repository.findAllCourses();
 		choices = SelectChoices.from(courses, "title", object.getCourse());
 
-		tuple = super.unbind(object, "code", "title", "resume", "goals", "estimatedTotalTime");
+		tuple = super.unbind(object, "code", "title", "resume", "goals", "estimatedTotalTime", "isPublished");
 		tuple.put("course", choices.getSelected().getKey());
 		tuple.put("courses", choices);
 

@@ -2,7 +2,6 @@
 package acme.features.authenticated.tutorial;
 
 import java.util.Collection;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -70,7 +69,7 @@ public class AuthenticatedTutorialShowService extends AbstractService<Authentica
 		choices = SelectChoices.from(courses, "title", object.getCourse());
 
 		final int id = object.getAssistant().getId();
-		final List<Session> sessions = object.getSessions();
+		final Collection<Session> sessions = this.repository.findManySessionsByTutorialId(object.getId());
 		tuple = super.unbind(object, "code", "title", "resume", "goals", "estimatedTotalTime");
 		tuple.put("course", choices.getSelected().getKey());
 		tuple.put("courses", choices);

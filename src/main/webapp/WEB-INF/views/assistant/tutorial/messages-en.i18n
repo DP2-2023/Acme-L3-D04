@@ -22,5 +22,7 @@ assistant.tutorial.list.button.create = Create
 assistant.tutorial.form.button.create = Create
 assistant.tutorial.form.button.update = Update
 assistant.tutorial.form.button.delete = Delete
+assistant.tutorial.form.button.publish = Publish
+assistant.tutorial.form.button.session = Sessions
 
 assistant.tutorial.form.error.negative-estimatedTotalTime = The estimated total time must be positive
