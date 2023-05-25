@@ -1,5 +1,5 @@
 
-package acme.entities.workbooks;
+package acme.entities.activities;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -12,14 +12,13 @@ import org.hibernate.validator.constraints.URL;
 
 import acme.entities.enrolments.Enrolment;
 import acme.framework.data.AbstractEntity;
-import acme.roles.Student;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
-public class Workbook extends AbstractEntity {
+public class Activity extends AbstractEntity {
 
 	protected static final long	serialVersionUID	= 1L;
 
@@ -33,14 +32,12 @@ public class Workbook extends AbstractEntity {
 	@Length(max = 75)
 	protected String			abstract$;
 
-	protected WorkbookType		type;
+	protected ActivityType		type;
 
 	protected Double			timePeriod;
 
 	@URL
 	protected String			furtherInformation;
-
-	protected boolean			published;
 
 	// Relationships ----------------------------------------------------------
 
@@ -48,10 +45,5 @@ public class Workbook extends AbstractEntity {
 	@Valid
 	@ManyToOne(optional = false)
 	protected Enrolment			enrolment;
-
-	@NotNull
-	@Valid
-	@ManyToOne(optional = false)
-	protected Student			student;
 
 }

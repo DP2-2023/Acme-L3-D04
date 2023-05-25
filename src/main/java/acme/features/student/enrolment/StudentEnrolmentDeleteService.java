@@ -1,5 +1,5 @@
 /*
- * StudentWorkbookShowService.java
+ * LecturerLectureDeleteService.java
  *
  * Copyright (C) 2012-2023 Rafael Corchuelo.
  *
@@ -10,25 +10,23 @@
  * they accept any liabilities with respect to them.
  */
 
-package acme.features.student.workbook;
+package acme.features.student.enrolment;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import acme.entities.workbooks.Workbook;
-import acme.entities.workbooks.WorkbookType;
-import acme.framework.components.jsp.SelectChoices;
+import acme.entities.enrolments.Enrolment;
 import acme.framework.components.models.Tuple;
 import acme.framework.services.AbstractService;
 import acme.roles.Student;
 
 @Service
-public class StudentWorkbookShowService extends AbstractService<Student, Workbook> {
+public class StudentEnrolmentDeleteService extends AbstractService<Student, Enrolment> {
 
 	// Internal state ---------------------------------------------------------
 
 	@Autowired
-	protected StudentWorkbookRepository repository;
+	protected StudentEnrolmentRepository repository;
 
 	// AbstractService interface ----------------------------------------------
 
@@ -45,42 +43,57 @@ public class StudentWorkbookShowService extends AbstractService<Student, Workboo
 	@Override
 	public void authorise() {
 		boolean status;
-		int masterId;
-		Workbook Workbook;
-		Student Student;
+		int enrolmentId;
+		Enrolment enrolment;
+		Student student;
 
-		masterId = super.getRequest().getData("id", int.class);
-		Workbook = this.repository.findOneWorkbookById(masterId);
+		enrolmentId = super.getRequest().getData("id", int.class);
+		enrolment = this.repository.findOneEnrolmentById(enrolmentId);
 
-		Student = Workbook == null ? null : Workbook.getStudent();
-		status = super.getRequest().getPrincipal().hasRole(Student) || Workbook != null;
+		student = enrolment == null ? null : enrolment.getStudent();
+		status = enrolment != null && !enrolment.isFinished() && super.getRequest().getPrincipal().hasRole(student);
 
 		super.getResponse().setAuthorised(status);
 	}
 
 	@Override
 	public void load() {
-		Workbook object;
+		Enrolment object;
 		int id;
 
 		id = super.getRequest().getData("id", int.class);
-		object = this.repository.findOneWorkbookById(id);
+		object = this.repository.findOneEnrolmentById(id);
 
 		super.getBuffer().setData(object);
 	}
 
 	@Override
-	public void unbind(final Workbook object) {
+	public void bind(final Enrolment object) {
 		assert object != null;
 
-		SelectChoices choices;
+		super.bind(object, "code", "motivation", "goals", "workTime", "isFinished");
+
+	}
+
+	@Override
+	public void validate(final Enrolment object) {
+		assert object != null;
+	}
+
+	@Override
+	public void perform(final Enrolment object) {
+		assert object != null;
+
+		this.repository.delete(object);
+	}
+
+	@Override
+	public void unbind(final Enrolment object) {
+		assert object != null;
+
 		Tuple tuple;
 
-		choices = SelectChoices.from(WorkbookType.class, object.getType());
-
-		tuple = super.unbind(object, "title", "abstract$", "type", "timePeriod", "furtherInformation", "published");
-		tuple.put("types", choices);
-
+		tuple = super.unbind(object, "code", "motivation", "goals", "workTime", "isFinished");
 		super.getResponse().setData(tuple);
 	}
 

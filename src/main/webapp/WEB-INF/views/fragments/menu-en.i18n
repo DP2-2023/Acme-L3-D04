@@ -68,7 +68,8 @@ master.menu.provider.favourite-link = Favourite link
 # master.menu.student #######################################################
 
 master.menu.student = Student
-master.menu.student.workbook.list = Workbook list
+master.menu.student.enrolment.list = Enrolment list
+master.menu.student.course.list = Course list
 
 # master.menu.consumer ##########################################################
 

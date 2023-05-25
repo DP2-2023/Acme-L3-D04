@@ -1,14 +1,3 @@
-/*
- * StudentCourseShowService.java
- *
- * Copyright (C) 2012-2023 Rafael Corchuelo.
- *
- * In keeping with the traditional purpose of furthering education and research, it is
- * the policy of the copyright owner to permit non-commercial use and redistribution of
- * this software. It has been tested carefully, but it is not guaranteed for any particular
- * purposes. The copyright owner does not offer any warranties or representations, nor do
- * they accept any liabilities with respect to them.
- */
 
 package acme.features.student.enrolment;
 
@@ -21,14 +10,14 @@ import acme.framework.services.AbstractService;
 import acme.roles.Student;
 
 @Service
-public class StudentEnrolmentShowService extends AbstractService<Student, Enrolment> {
+public class StudentEnrolmentUpdateService extends AbstractService<Student, Enrolment> {
 
 	// Internal state ---------------------------------------------------------
 
 	@Autowired
 	protected StudentEnrolmentRepository repository;
 
-	// AbstractService interface ----------------------------------------------
+	// AbstractService<Lecturer, Lecture> -------------------------------------
 
 
 	@Override
@@ -43,12 +32,15 @@ public class StudentEnrolmentShowService extends AbstractService<Student, Enrolm
 	@Override
 	public void authorise() {
 		boolean status;
-		int id;
+		int enrolmentId;
 		Enrolment enrolment;
+		Student student;
 
-		id = super.getRequest().getData("id", int.class);
-		enrolment = this.repository.findOneEnrolmentById(id);
-		status = enrolment != null;
+		enrolmentId = super.getRequest().getData("id", int.class);
+		enrolment = this.repository.findOneEnrolmentById(enrolmentId);
+
+		student = enrolment == null ? null : enrolment.getStudent();
+		status = enrolment != null && !enrolment.isFinished() && super.getRequest().getPrincipal().hasRole(student);
 
 		super.getResponse().setAuthorised(status);
 	}
@@ -65,12 +57,31 @@ public class StudentEnrolmentShowService extends AbstractService<Student, Enrolm
 	}
 
 	@Override
+	public void bind(final Enrolment object) {
+		assert object != null;
+
+		super.bind(object, "code", "motivation", "goals", "workTime");
+
+	}
+
+	@Override
+	public void validate(final Enrolment object) {
+		assert object != null;
+	}
+
+	@Override
+	public void perform(final Enrolment object) {
+		assert object != null;
+
+		this.repository.save(object);
+	}
+
+	@Override
 	public void unbind(final Enrolment object) {
 		assert object != null;
 
 		Tuple tuple;
-
-		tuple = super.unbind(object, "code", "motivation", "goals", "workTime");
+		tuple = super.unbind(object, "code", "motivation", "goals", "workTime", "isFinished");
 
 		super.getResponse().setData(tuple);
 	}

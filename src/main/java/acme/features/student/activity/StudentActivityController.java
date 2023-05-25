@@ -10,39 +10,36 @@
  * they accept any liabilities with respect to them.
  */
 
-package acme.features.student.workbook;
+package acme.features.student.activity;
 
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import acme.entities.workbooks.Workbook;
+import acme.entities.activities.Activity;
 import acme.framework.controllers.AbstractController;
 import acme.roles.Student;
 
 @Controller
-public class StudentWorkbookController extends AbstractController<Student, Workbook> {
+public class StudentActivityController extends AbstractController<Student, Activity> {
 
 	// Internal state ---------------------------------------------------------
 
 	@Autowired
-	protected StudentWorkbookShowService		showService;
+	protected StudentActivityShowService		showService;
 
 	@Autowired
-	protected StudentWorkbookCreateService		createService;
+	protected StudentActivityCreateService		createService;
 
 	@Autowired
-	protected StudentWorkbookUpdateService		updateService;
+	protected StudentActivityUpdateService		updateService;
 
 	@Autowired
-	protected StudentWorkbookDeleteService		deleteService;
+	protected StudentActivityDeleteService		deleteService;
 
 	@Autowired
-	protected StudentWorkbookListMineService	listMineService;
-
-	@Autowired
-	protected StudentWorkbookPublishService		publishService;
+	protected StudentActivityListMineService	listMineService;
 
 	// Constructors -----------------------------------------------------------
 
@@ -55,7 +52,7 @@ public class StudentWorkbookController extends AbstractController<Student, Workb
 		super.addBasicCommand("delete", this.deleteService);
 
 		super.addCustomCommand("list-mine", "list", this.listMineService);
-		super.addCustomCommand("publish", "update", this.publishService);
+
 	}
 
 }

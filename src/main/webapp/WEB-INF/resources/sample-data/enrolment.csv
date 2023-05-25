@@ -1,3 +1,3 @@
-key,code,motivation,goals,workTime,key:student
-enrolment-01,"AAA 000",ejemplo1,ejemplo1,2.2,student-01
-enrolment-02,"Y 555",ejemplo2,ejemplo2,1.1,student-02
+key,code,motivation,goals,workTime,is-finished,creditCard,holder,key:student,key:course
+enrolment-01,"AAA 000",ejemplo1,ejemplo1,2.2,false,,,student-01,course-01
+enrolment-02,"Y 555",ejemplo2,ejemplo2,1.1,false,,,student-02,course-02

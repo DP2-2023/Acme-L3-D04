@@ -17,11 +17,11 @@
 
 <acme:list>
 	<acme:list-column code="student.workbook.list.label.title" path="title" width="80%"/>
-	<acme:list-column code="student.workbook.list.label.type" path="type" width="10%"/>
-	<acme:list-column code="student.workbook.list.label.published" path="published" width="10%"/>
+	<acme:list-column code="student.workbook.list.label.abstract$" path="abstract$" width="10%"/>
+	<acme:list-column code="student.workbook.list.label.timePeriod" path="timePeriod" width="10%"/>
 	<acme:list-payload path="payload"/>
 </acme:list>
 
 <jstl:if test="${_command == 'list-mine'}">
-	<acme:button code="student.workbook.list.button.create" action="/student/workbook/create"/>
+	<acme:button code="student.activity.list.button.create" action="/student/activity/create"/>
 </jstl:if>	

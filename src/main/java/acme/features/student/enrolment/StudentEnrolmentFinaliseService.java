@@ -1,5 +1,5 @@
 /*
- * StudentWorkbookDeleteService.java
+ * LecturerLecturePublishService.java
  *
  * Copyright (C) 2012-2023 Rafael Corchuelo.
  *
@@ -10,23 +10,23 @@
  * they accept any liabilities with respect to them.
  */
 
-package acme.features.student.workbook;
+package acme.features.student.enrolment;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import acme.entities.workbooks.Workbook;
+import acme.entities.enrolments.Enrolment;
 import acme.framework.components.models.Tuple;
 import acme.framework.services.AbstractService;
 import acme.roles.Student;
 
 @Service
-public class StudentWorkbookDeleteService extends AbstractService<Student, Workbook> {
+public class StudentEnrolmentFinaliseService extends AbstractService<Student, Enrolment> {
 
 	// Internal state ---------------------------------------------------------
 
 	@Autowired
-	protected StudentWorkbookRepository repository;
+	protected StudentEnrolmentRepository repository;
 
 	// AbstractService interface ----------------------------------------------
 
@@ -43,57 +43,60 @@ public class StudentWorkbookDeleteService extends AbstractService<Student, Workb
 	@Override
 	public void authorise() {
 		boolean status;
-		int masterId;
-		final Workbook Workbook;
-		final Student Student;
+		final int enrolmentId;
+		final Enrolment enrolment;
+		final Student student;
 
-		masterId = super.getRequest().getData("id", int.class);
-		Workbook = this.repository.findOneWorkbookById(masterId);
+		enrolmentId = super.getRequest().getData("id", int.class);
+		enrolment = this.repository.findOneEnrolmentById(enrolmentId);
 
-		Student = Workbook == null ? null : Workbook.getStudent();
-		status = Workbook != null && !Workbook.isPublished() && super.getRequest().getPrincipal().hasRole(Student);
+		student = enrolment == null ? null : enrolment.getStudent();
+		status = enrolment != null && !enrolment.isFinished() && super.getRequest().getPrincipal().hasRole(student);
 
 		super.getResponse().setAuthorised(status);
 	}
 
 	@Override
 	public void load() {
-		Workbook object;
+		Enrolment object;
 		int id;
 
 		id = super.getRequest().getData("id", int.class);
-		object = this.repository.findOneWorkbookById(id);
+		object = this.repository.findOneEnrolmentById(id);
 
 		super.getBuffer().setData(object);
 	}
 
 	@Override
-	public void bind(final Workbook object) {
+	public void bind(final Enrolment object) {
 		assert object != null;
 
-		super.bind(object, "title", "abstract$", "type", "timePeriod", "furtherInformation");
+		super.bind(object, "creditCard", "holder");
 
 	}
 
 	@Override
-	public void validate(final Workbook object) {
+	public void validate(final Enrolment object) {
 		assert object != null;
+
 	}
 
 	@Override
-	public void perform(final Workbook object) {
+	public void perform(final Enrolment object) {
 		assert object != null;
 
-		this.repository.delete(object);
+		object.setFinished(true);
+
+		this.repository.save(object);
 	}
 
 	@Override
-	public void unbind(final Workbook object) {
+	public void unbind(final Enrolment object) {
 		assert object != null;
 
 		Tuple tuple;
 
-		tuple = super.unbind(object, "title", "abstract$", "type", "timePeriod", "furtherInformation");
+		tuple = super.unbind(object, "code", "motivation", "goals", "workTime", "isFinished", "creditCard", "holder");
 
 		super.getResponse().setData(tuple);
 	}

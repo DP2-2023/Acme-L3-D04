@@ -10,25 +10,27 @@
  * they accept any liabilities with respect to them.
  */
 
-package acme.features.student.workbook;
+package acme.features.student.activity;
+
+import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import acme.entities.workbooks.Workbook;
-import acme.entities.workbooks.WorkbookType;
+import acme.entities.activities.Activity;
+import acme.entities.activities.ActivityType;
 import acme.framework.components.jsp.SelectChoices;
 import acme.framework.components.models.Tuple;
 import acme.framework.services.AbstractService;
 import acme.roles.Student;
 
 @Service
-public class StudentWorkbookUpdateService extends AbstractService<Student, Workbook> {
+public class StudentActivityUpdateService extends AbstractService<Student, Activity> {
 
 	// Internal state ---------------------------------------------------------
 
 	@Autowired
-	protected StudentWorkbookRepository repository;
+	protected StudentActivityRepository repository;
 
 	// AbstractService<Student, Workbook> -------------------------------------
 
@@ -46,31 +48,38 @@ public class StudentWorkbookUpdateService extends AbstractService<Student, Workb
 	public void authorise() {
 		boolean status;
 		int masterId;
-		final Workbook Workbook;
-		final Student Student;
+		final Activity activity;
+		final Student student;
 
 		masterId = super.getRequest().getData("id", int.class);
-		Workbook = this.repository.findOneWorkbookById(masterId);
+		activity = this.repository.findOneActivityById(masterId);
 
-		Student = Workbook == null ? null : Workbook.getStudent();
-		status = Workbook != null && !Workbook.isPublished() && super.getRequest().getPrincipal().hasRole(Student);
+		student = this.repository.findOneStudentById(super.getRequest().getPrincipal().getActiveRoleId());
+
+		status = activity != null && student != null;
+
+		// Check activity is of student
+		if (status) {
+			final Collection<Activity> studentActivities = this.repository.findManyActivitiesByStudentId(student.getId());
+			status = studentActivities.contains(activity);
+		}
 
 		super.getResponse().setAuthorised(status);
 	}
 
 	@Override
 	public void load() {
-		Workbook object;
+		Activity object;
 		int id;
 
 		id = super.getRequest().getData("id", int.class);
-		object = this.repository.findOneWorkbookById(id);
+		object = this.repository.findOneActivityById(id);
 
 		super.getBuffer().setData(object);
 	}
 
 	@Override
-	public void bind(final Workbook object) {
+	public void bind(final Activity object) {
 		assert object != null;
 
 		super.bind(object, "title", "abstract$", "type", "timePeriod", "furtherInformation");
@@ -78,29 +87,29 @@ public class StudentWorkbookUpdateService extends AbstractService<Student, Workb
 	}
 
 	@Override
-	public void validate(final Workbook object) {
+	public void validate(final Activity object) {
 		assert object != null;
 
 	}
 
 	@Override
-	public void perform(final Workbook object) {
+	public void perform(final Activity object) {
 		assert object != null;
 
 		this.repository.save(object);
 	}
 
 	@Override
-	public void unbind(final Workbook object) {
+	public void unbind(final Activity object) {
 		assert object != null;
 
 		SelectChoices choices;
 		Tuple tuple;
 
-		choices = SelectChoices.from(WorkbookType.class, object.getType());
+		choices = SelectChoices.from(ActivityType.class, object.getType());
 
 		tuple = super.unbind(object, "title", "abstract$", "type", "timePeriod", "furtherInformation", "published");
-		tuple.put("types", choices);
+		tuple.put("type", choices);
 
 		super.getResponse().setData(tuple);
 	}

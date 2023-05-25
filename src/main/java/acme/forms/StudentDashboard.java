@@ -1,3 +1,4 @@
+
 package acme.forms;
 
 import acme.framework.data.AbstractForm;
@@ -6,22 +7,21 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class StudentDashboard extends AbstractForm{
-	
-	protected static final long serialVersionUID = 1L;
-	
+public class StudentDashboard extends AbstractForm {
+
+	protected static final long	serialVersionUID	= 1L;
+
 	// Attributes -------------------------------------------------------------
 
-	Integer	totalNumberOfTheoryWorbook;
-	Integer	totalNumberOfHandsOnWorbook;
-	Double	averagePeriodOfTheActivitiesPerWorbook;
-	Double	minimunPeriodOfTheActivitiesPerWorbook;
-	Double	maxumumPeriodOfTheActivitiesPerHerWorbook;
-	Double	desviationOfPeriodOfTheActivitiesPerWorbook;	
-	Double	averageLearningTimePerCourse;
-	Double	desviationLearningTimePerCourse;
-	Double	minimunLearningTimePerCourse;
-	Double	maximumLearningTimePerCourse;
-
+	Integer						totalNumberOfTheoryWorkbook;
+	Integer						totalNumberOfHandsOnWorkbook;
+	Double						averagePeriodOfTheActivitiesPerWorkbook;
+	Double						minimumPeriodOfTheActivitiesPerWorkbook;
+	Double						maximumPeriodOfTheActivitiesPerHerWorkbook;
+	Double						deviationOfPeriodOfTheActivitiesPerWorkbook;
+	Double						averageLearningTimePerCourse;
+	Double						deviationLearningTimePerCourse;
+	Double						minimumLearningTimePerCourse;
+	Double						maximumLearningTimePerCourse;
 
 }

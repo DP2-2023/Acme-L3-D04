@@ -10,26 +10,26 @@
  * they accept any liabilities with respect to them.
  */
 
-package acme.features.student.workbook;
+package acme.features.student.activity;
 
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import acme.entities.workbooks.Workbook;
+import acme.entities.activities.Activity;
 import acme.framework.components.accounts.Principal;
 import acme.framework.components.models.Tuple;
 import acme.framework.services.AbstractService;
 import acme.roles.Student;
 
 @Service
-public class StudentWorkbookListMineService extends AbstractService<Student, Workbook> {
+public class StudentActivityListMineService extends AbstractService<Student, Activity> {
 
 	// Internal state ---------------------------------------------------------
 
 	@Autowired
-	protected StudentWorkbookRepository repository;
+	protected StudentActivityRepository repository;
 
 	// AbstractService interface ----------------------------------------------
 
@@ -46,22 +46,22 @@ public class StudentWorkbookListMineService extends AbstractService<Student, Wor
 
 	@Override
 	public void load() {
-		Collection<Workbook> objects;
+		Collection<Activity> objects;
 		Principal principal;
 
 		principal = super.getRequest().getPrincipal();
-		objects = this.repository.findManyWorkbooksByStudentId(principal.getActiveRoleId());
+		objects = this.repository.findManyActivitiesByStudentId(principal.getActiveRoleId());
 
 		super.getBuffer().setData(objects);
 	}
 
 	@Override
-	public void unbind(final Workbook object) {
+	public void unbind(final Activity object) {
 		assert object != null;
 
 		Tuple tuple;
 
-		tuple = super.unbind(object, "title", "type", "published");
+		tuple = super.unbind(object, "title", "abstract$", "timePeriod");
 
 		super.getResponse().setData(tuple);
 	}

@@ -1,5 +1,5 @@
 /*
- * StudentCourseShowService.java
+ * StudentWorkbookShowService.java
  *
  * Copyright (C) 2012-2023 Rafael Corchuelo.
  *
@@ -10,23 +10,27 @@
  * they accept any liabilities with respect to them.
  */
 
-package acme.features.student.enrolment;
+package acme.features.student.activity;
+
+import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import acme.entities.enrolments.Enrolment;
+import acme.entities.activities.Activity;
+import acme.entities.activities.ActivityType;
+import acme.framework.components.jsp.SelectChoices;
 import acme.framework.components.models.Tuple;
 import acme.framework.services.AbstractService;
 import acme.roles.Student;
 
 @Service
-public class StudentEnrolmentShowService extends AbstractService<Student, Enrolment> {
+public class StudentActivityShowService extends AbstractService<Student, Activity> {
 
 	// Internal state ---------------------------------------------------------
 
 	@Autowired
-	protected StudentEnrolmentRepository repository;
+	protected StudentActivityRepository repository;
 
 	// AbstractService interface ----------------------------------------------
 
@@ -43,34 +47,48 @@ public class StudentEnrolmentShowService extends AbstractService<Student, Enrolm
 	@Override
 	public void authorise() {
 		boolean status;
-		int id;
-		Enrolment enrolment;
+		int masterId;
+		final Activity activity;
+		final Student student;
 
-		id = super.getRequest().getData("id", int.class);
-		enrolment = this.repository.findOneEnrolmentById(id);
-		status = enrolment != null;
+		masterId = super.getRequest().getData("id", int.class);
+		activity = this.repository.findOneActivityById(masterId);
+
+		student = this.repository.findOneStudentById(super.getRequest().getPrincipal().getActiveRoleId());
+
+		status = activity != null && student != null;
+
+		// Check activity is of student
+		if (status) {
+			final Collection<Activity> studentActivities = this.repository.findManyActivitiesByStudentId(student.getId());
+			status = studentActivities.contains(activity);
+		}
 
 		super.getResponse().setAuthorised(status);
 	}
 
 	@Override
 	public void load() {
-		Enrolment object;
+		Activity object;
 		int id;
 
 		id = super.getRequest().getData("id", int.class);
-		object = this.repository.findOneEnrolmentById(id);
+		object = this.repository.findOneActivityById(id);
 
 		super.getBuffer().setData(object);
 	}
 
 	@Override
-	public void unbind(final Enrolment object) {
+	public void unbind(final Activity object) {
 		assert object != null;
 
+		SelectChoices choices;
 		Tuple tuple;
 
-		tuple = super.unbind(object, "code", "motivation", "goals", "workTime");
+		choices = SelectChoices.from(ActivityType.class, object.getType());
+
+		tuple = super.unbind(object, "title", "abstract$", "type", "timePeriod", "furtherInformation");
+		tuple.put("types", choices);
 
 		super.getResponse().setData(tuple);
 	}
