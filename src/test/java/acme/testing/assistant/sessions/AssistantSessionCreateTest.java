@@ -1,3 +1,6 @@
+
+package acme.testing.assistant.sessions;
+
 //
 //package acme.testing.assistant.tutorial;
 //
@@ -7,8 +10,8 @@
 //
 //import acme.testing.TestHarness;
 //
-//public class AssistantTutorialCreateTest extends TestHarness {
-//
+//public class AssistantSessionCreateTest extends TestHarness {
+//	
 //	@ParameterizedTest
 //	@CsvFileSource(resources = "/assistant/tutorial/create-positive.csv", encoding = "utf-8", numLinesToSkip = 1)
 //	public void test100Positive(final int recordIndex, final String code, final String title, final String resume, final String goals, final String estimatedTotalTime, final String course) {

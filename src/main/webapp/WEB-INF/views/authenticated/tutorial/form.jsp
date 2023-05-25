@@ -24,15 +24,6 @@
 	<acme:input-select code="authenticated.tutorial.list.label.course-title" path="course" choices="${courses}"/>
 	<jstl:if test="${_command == 'show'}">
 		<acme:input-integer code="authenticated.tutorial.form.label.numSessions" path="numSessions" readonly="true"/>
-		<acme:input-integer code="authenticated.tutorial.form.label.assistant" path="assistantId" readonly="true"/>
+		<acme:input-integer code="authenticated.tutorial.form.label.assistant" path="assistantName" readonly="true"/>
 	</jstl:if>
-	<jstl:choose>
-		<jstl:when test="${acme:anyOf(_command, 'show|update|delete')}">
-			<acme:submit code="authenticated.tutorial.form.button.update" action="/assistant/tutorial/update"/>
-			<acme:submit code="authenticated.tutorial.form.button.delete" action="/assistant/tutorial/delete"/>
-		</jstl:when>
-		<jstl:when test="${_command == 'create'}">
-			<acme:submit code="authenticated.tutorial.form.button.create" action="/assistant/tutorial/create"/>
-		</jstl:when>		
-	</jstl:choose>	
 </acme:form>
