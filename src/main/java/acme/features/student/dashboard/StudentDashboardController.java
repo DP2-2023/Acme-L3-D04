@@ -9,34 +9,33 @@
  * purposes. The copyright owner does not offer any warranties or representations, nor do
  * they accept any liabilities with respect to them.
  * 
- * 
- * package acme.features.student.dashboard;
- * 
- * import javax.annotation.PostConstruct;
- * 
- * import org.springframework.beans.factory.annotation.Autowired;
- * import org.springframework.stereotype.Controller;
- * 
- * import acme.forms.StudentDashboard;
- * import acme.framework.controllers.AbstractController;
- * import acme.roles.Student;
- * 
- * @Controller
- * public class StudentDashboardController extends AbstractController<Student, StudentDashboard> {
- * 
- * // Internal state ---------------------------------------------------------
- * 
- * @Autowired
- * protected StudentDashboardShowService showService;
- * 
- * // Constructors -----------------------------------------------------------
- * 
- * 
- * @PostConstruct
- * protected void initialise() {
- * super.addBasicCommand("show", this.showService);
- * }
- * 
- * }
- * 
  */
+
+package acme.features.student.dashboard;
+
+import javax.annotation.PostConstruct;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+
+import acme.forms.StudentDashboard;
+import acme.framework.controllers.AbstractController;
+import acme.roles.Student;
+
+@Controller
+public class StudentDashboardController extends AbstractController<Student, StudentDashboard> {
+
+	// Internal state ---------------------------------------------------------
+
+	@Autowired
+	protected StudentDashboardShowService showService;
+
+	// Constructors -----------------------------------------------------------
+
+
+	@PostConstruct
+	protected void initialise() {
+		super.addBasicCommand("show", this.showService);
+	}
+
+}

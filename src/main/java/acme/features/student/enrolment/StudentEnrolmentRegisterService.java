@@ -6,6 +6,7 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import acme.entities.courses.Course;
 import acme.entities.enrolments.Enrolment;
 import acme.framework.components.jsp.SelectChoices;
 import acme.framework.components.models.Tuple;
@@ -68,16 +69,16 @@ public class StudentEnrolmentRegisterService extends AbstractService<Student, En
 		assert object != null;
 		int studentId;
 		SelectChoices choices;
-		final Collection<Enrolment> enrolments;
+		final Collection<Course> courses;
 		Tuple tuple;
 
 		studentId = super.getRequest().getPrincipal().getActiveRoleId();
-		enrolments = this.repository.findManyEnrolmentsByStudentId(studentId);
+		courses = this.repository.findManyCoursesByStudentId(studentId);
 
-		choices = SelectChoices.from(enrolments, "course", null);
+		choices = SelectChoices.from(courses, "title", null);
 
 		tuple = super.unbind(object, "code", "motivation", "goals", "workTime");
-		tuple.put("enrolments", choices);
+		tuple.put("course", choices);
 
 		super.getResponse().setData(tuple);
 	}
