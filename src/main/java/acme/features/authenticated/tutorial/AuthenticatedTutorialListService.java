@@ -28,6 +28,7 @@ public class AuthenticatedTutorialListService extends AbstractService<Authentica
 
 	@Override
 	public void authorise() {
+
 		super.getResponse().setAuthorised(true);
 	}
 
@@ -35,7 +36,7 @@ public class AuthenticatedTutorialListService extends AbstractService<Authentica
 	public void load() {
 		Collection<Tutorial> objects;
 
-		objects = this.repository.findAllTutorial();
+		objects = this.repository.findTutorialCoursePublished();
 
 		super.getBuffer().setData(objects);
 	}
@@ -44,7 +45,7 @@ public class AuthenticatedTutorialListService extends AbstractService<Authentica
 	public void unbind(final Tutorial object) {
 		assert object != null;
 
-		final Tuple tuple = super.unbind(object, "code", "title", "goals");
+		final Tuple tuple = super.unbind(object, "code", "title", "goals", "isPublished");
 		super.getResponse().setData(tuple);
 	}
 

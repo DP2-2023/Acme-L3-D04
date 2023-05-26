@@ -1,5 +1,0 @@
-recordIndex,title,abstract$,learningTime,body,type,furtherInformation,isPublished
-3,Test Lecture 1,Filler HANDS_ON Published lecture,1.50,Test body,HANDS_ON,http://www.example.com/,True
-4,Test Lecture 2,Filler HANDS_ON unPublished lecture,1.50,Test body,HANDS_ON,http://www.example.com/,False
-5,Test Lecture 3,Filler THEORETICAL Published lecture,1.50,Test body,THEORETICAL,http://www.example.com/,True
-6,Test Lecture 4,Filler THEORETICAL unPublished lecture,1.50,Test body,THEORETICAL,http://www.example.com/,False

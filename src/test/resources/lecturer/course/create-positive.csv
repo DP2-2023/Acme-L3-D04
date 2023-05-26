@@ -1,5 +1,0 @@
-recordIndex,code,title,abstract$,type,price,furtherInformation,isPublished,lecture,convertedPrice
-10,Z 009,"Test Create 1","Test description",HANDS_ON,EUR 10.00,,False,Test Lecture 1,EUR 10.00
-11,Z 010,"Test Create 2","Test description",THEORETICAL,EUR 10.00,,False,Test Lecture 3,EUR 10.00
-12,Z 011,"Test Create 3","Test description",HANDS_ON,USD 10.00,,False,Test Lecture 1,EUR 10.90
-13,Z 012,"Test Create 4","A",HANDS_ON,GBP 10.00,"http://www.example.com",False,Test Lecture 2,EUR 8.80

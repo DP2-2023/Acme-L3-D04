@@ -15,6 +15,7 @@ assistant.tutorial.list.label.resume = Resume:
 assistant.tutorial.form.label.estimatedTotalTime = Estimated Total Time:
 assistant.tutorial.list.label.course-title = Course Title:
 assistant.tutorial.form.label.numSessions = Number of Sessions:
+assistant.tutorial.list.label.publish = Publish
 
 validation.tutorial.code = Ej: XXXX0000
 
@@ -22,5 +23,9 @@ assistant.tutorial.list.button.create = Create
 assistant.tutorial.form.button.create = Create
 assistant.tutorial.form.button.update = Update
 assistant.tutorial.form.button.delete = Delete
+assistant.tutorial.form.button.publish = Publish
+assistant.tutorial.form.button.session = Sessions
 
 assistant.tutorial.form.error.negative-estimatedTotalTime = The estimated total time must be positive
+
+assistant.offer.form.error.spam = You can not introduce spam.
