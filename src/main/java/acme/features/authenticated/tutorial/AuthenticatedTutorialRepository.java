@@ -15,7 +15,7 @@ import acme.roles.Assistant;
 @Repository
 public interface AuthenticatedTutorialRepository extends AbstractRepository {
 
-	@Query("select t from Tutorial t where t.course.isPublished = true")
+	@Query("select t from Tutorial t where t.isPublished = true AND t.course.isPublished = true")
 	Collection<Tutorial> findTutorialCoursePublished();
 
 	@Query("select t from Tutorial t where t.id = :id")

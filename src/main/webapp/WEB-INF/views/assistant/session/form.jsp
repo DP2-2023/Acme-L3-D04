@@ -24,7 +24,7 @@
 	<acme:input-textbox code="assistant.session.form.label.information" path="information"/>
 	<jstl:choose>
 		<jstl:when test="${acme:anyOf(_command, 'show|update|delete')}">
-			<acme:submit code="assistant.session.form.button.update" action="/assistant/session/update"/>
+			<acme:submit code="assistant.session.form.button.update" action="/assistant/session/update?masterId=${id}"/>
 			<acme:submit code="assistant.session.form.button.delete" action="/assistant/session/delete"/>
 		</jstl:when>
 		<jstl:when test="${_command == 'create'}">

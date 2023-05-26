@@ -24,3 +24,7 @@ assistant.session.form.button.create = Crear
 assistant.session.form.button.update = Actualizar
 assistant.session.form.button.delete = Eliminar
 
+assistant.session.error.date = La fecha debe ser de una duración de 1 a 5 horas
+assistant.session.error.date1 = La fecha de inicio debe ser al menos un día después de la fecha actual
+
+assistant.offer.form.error.spam = No puedes introducir spam

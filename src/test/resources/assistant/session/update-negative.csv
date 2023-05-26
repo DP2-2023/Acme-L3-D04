@@ -1,0 +1,9 @@
+tutorialRecordIndex,sessionRecordIndex,title,resume,sessionType,periodStart,periodEnd,information
+1,2,,,---,,,
+1,2,"zzZzz","Summa",THEORYSESSION,2023/02/13 19:39,2023/02/14 22:39,"http://www.example.com/"
+1,2,"zzZzz","Sumry test Update",THEORYSESSION,2023/02/13 19:39,2023/02/13 22:39,Mala url
+1,2,,"Summary test Update",THEORYSESSION,,2023/02/13 22:39,"http://www.example.com/"
+1,2,"zzZzz","Summary test Update",THEORYSESSION,2023/02/13 19:39,2020/02/13 22:39,"http://www.example.com/"
+1,2,"zzZzz","Summary test Update",THEORYSESSION,2020/02/13 19:39,2023/02/13 22:39,"http://www.example.com/"
+1,2,"zzZzz",,---,2023/02/13 19:39,2023/02/13 22:39,"http://www.example.com/"
+1,2,"zzZzz","Summary test Update",---,2023/02/13 19:39,2023/02/13 22:39,"http://www.example.com/"

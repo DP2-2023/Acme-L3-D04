@@ -6,13 +6,14 @@ import org.springframework.stereotype.Service;
 
 import acme.entities.sessions.Session;
 import acme.entities.sessions.SessionType;
+import acme.entities.tutorial.Tutorial;
 import acme.framework.components.jsp.SelectChoices;
 import acme.framework.components.models.Tuple;
 import acme.framework.services.AbstractService;
 import acme.roles.Assistant;
 
 @Service
-public class AssistantSessionShowService extends AbstractService<Assistant, Session> {
+public class AssistantSessionDeleteService extends AbstractService<Assistant, Session> {
 
 	@Autowired
 	protected AssistantSessionRepository repository;
@@ -31,11 +32,11 @@ public class AssistantSessionShowService extends AbstractService<Assistant, Sess
 	public void authorise() {
 		boolean status;
 		int sessionId;
-		Session session;
+		Tutorial tutorial;
 
 		sessionId = super.getRequest().getData("id", int.class);
-		session = this.repository.findOneSessionById(sessionId);
-		status = session != null && super.getRequest().getPrincipal().hasRole(session.getTutorial().getAssistant());
+		tutorial = this.repository.findOneTutorialBySessionId(sessionId);
+		status = tutorial != null && tutorial.isPublished() && super.getRequest().getPrincipal().hasRole(tutorial.getAssistant());
 
 		super.getResponse().setAuthorised(status);
 	}
@@ -52,17 +53,39 @@ public class AssistantSessionShowService extends AbstractService<Assistant, Sess
 	}
 
 	@Override
-	public void unbind(final Session object) {
-
+	public void bind(final Session object) {
 		assert object != null;
+
+		super.bind(object, "title", "resume", "sessionType", "periodStart", "periodEnd", "information");
+	}
+
+	@Override
+	public void validate(final Session object) {
+		assert object != null;
+	}
+
+	@Override
+	public void perform(final Session object) {
+		assert object != null;
+
+		this.repository.delete(object);
+	}
+
+	@Override
+	public void unbind(final Session object) {
+		assert object != null;
+
 		SelectChoices choices;
+
 		Tuple tuple;
 
 		choices = SelectChoices.from(SessionType.class, object.getSessionType());
 
 		tuple = super.unbind(object, "title", "resume", "sessionType", "periodStart", "periodEnd", "information");
+		tuple.put("masterId", super.getRequest().getData("masterId", int.class));
+		tuple.put("published", object.getTutorial().isPublished());
 		tuple.put("sessionTypes", choices);
+
 		super.getResponse().setData(tuple);
 	}
-
 }

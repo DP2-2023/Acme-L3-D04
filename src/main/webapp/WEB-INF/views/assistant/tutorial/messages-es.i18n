@@ -27,3 +27,5 @@ assistant.tutorial.form.button.publish = Publicar
 assistant.tutorial.form.button.session = Sesiones
 
 assistant.tutorial.form.error.negative-estimatedTotalTime = El tiempo estimado total tiene que ser positivo
+
+assistant.offer.form.error.spam = No puedes introducir spam

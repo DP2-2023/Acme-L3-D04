@@ -1,6 +1,6 @@
 key,code,title,resume,goals,estimatedTotalTime,is-published,key:assistant,key:course
 tutorial-01,BBB0000,"Title one","Summary 1","Some goals",1.0,true,assistant-01,course-01
-tutorial-02,AAA0000,"Title two","Summary 1","Some goals",1.5,false,assistant-01,course-03
+tutorial-02,AAA0000,"Title two","Summary 1","Some goals",1.5,true,assistant-01,course-03
 tutorial-03,CCC0000,"Test 1","Summary 1","Some goals",1.0,true,assistant-01,course-01
 tutorial-04,MMM0000,"Test 2","Summary 1","Some goals",1.5,false,assistant-02,course-03
 tutorial-05,XXX0000,"Test 3","Summary 1","Some goals",1.0,true,assistant-01,course-01

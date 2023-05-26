@@ -1,7 +1,7 @@
 
 package acme.testing.assistant.sessions;
 /*
- * AssistantSessionListTest.java
+ * AssistantApplicationShowTest.java
  *
  * Copyright (C) 2012-2023 Rafael Corchuelo.
  *
@@ -19,10 +19,10 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import acme.entities.tutorial.Tutorial;
+import acme.entities.sessions.Session;
 import acme.testing.TestHarness;
 
-public class AssistantSessionListTest extends TestHarness {
+public class AssistantSessionShowTest extends TestHarness {
 
 	// Internal state ---------------------------------------------------------
 
@@ -33,26 +33,28 @@ public class AssistantSessionListTest extends TestHarness {
 
 
 	@ParameterizedTest
-	@CsvFileSource(resources = "/assistant/session/list-positive.csv", encoding = "utf-8", numLinesToSkip = 1)
-	public void test100Positive(final int tutorialRecordIndex, final String code, final int sessionRecordIndex, final String title, final String sessionType) {
-		// HINT: this test authenticates as an assistant, then lists his or her tutorials, 
-		// HINT+ selects one of them, and check that it has the expected sessions.
+	@CsvFileSource(resources = "/assistant/session/show-positive.csv", encoding = "utf-8", numLinesToSkip = 1)
+	public void test100Positive(final int tutorialRecordIndex, final int sessionRecordIndex, final String title, final String resume, final String sessionType, final String periodStart, final String periodEnd, final String information) {
+		// HINT: this test signs in as an assistant, lists his or her tutorials, selects
+		// HINT+ one of them and checks that it's as expected.
 
 		super.signIn("assistant1", "assistant1");
 
 		super.clickOnMenu("Assistant", "List tutorials");
 		super.checkListingExists();
 		super.sortListing(0, "asc");
-
-		super.checkColumnHasValue(tutorialRecordIndex, 0, code);
 		super.clickOnListingRecord(tutorialRecordIndex);
-		super.checkInputBoxHasValue("code", code);
 		super.clickOnButton("Sessions");
-
 		super.checkListingExists();
-		super.checkColumnHasValue(sessionRecordIndex, 0, title);
-		super.checkColumnHasValue(sessionRecordIndex, 1, sessionType);
 		super.clickOnListingRecord(sessionRecordIndex);
+		super.checkFormExists();
+
+		super.checkInputBoxHasValue("title", title);
+		super.checkInputBoxHasValue("resume", resume);
+		super.checkInputBoxHasValue("sessionType", sessionType);
+		super.checkInputBoxHasValue("periodStart", periodStart);
+		super.checkInputBoxHasValue("periodEnd", periodEnd);
+		super.checkInputBoxHasValue("information", information);
 
 		super.signOut();
 	}
@@ -65,28 +67,34 @@ public class AssistantSessionListTest extends TestHarness {
 
 	@Test
 	public void test300Hacking() {
-		// HINT: this test tries to list the sessions of a tutorial that is unpublished
-		// HINT+ using a principal that didn't create it. 
+		// HINT: this test tries to show a session of a tutorial that is in draft mode or
+		// HINT+ not available, but wasn't published by the principal;
 
-		Collection<Tutorial> tutorials;
+		Collection<Session> sessions;
 		String param;
 
-		tutorials = this.repository.findManyTutorialsByAssistantUsername("assistant1");
-		for (final Tutorial tutorial : tutorials)
-			if (tutorial.isPublished()) {
-				param = String.format("masterId=%d", tutorial.getId());
+		super.signIn("assistant1", "assistant1");
+		sessions = this.repository.findManySessionByAssistantUsername("assistant2");
+		for (final Session session : sessions)
+			if (session.getTutorial().isPublished()) {
+				param = String.format("id=%d", session.getId());
 
 				super.checkLinkExists("Sign in");
-				super.request("/assistant/session/list-tutorial", param);
+				super.request("/assistant/session/show", param);
 				super.checkPanicExists();
 
 				super.signIn("administrator", "administrator");
-				super.request("/assistant/session/list-tutorial", param);
+				super.request("/assistant/session/show", param);
 				super.checkPanicExists();
 				super.signOut();
 
 				super.signIn("assistant2", "assistant2");
-				super.request("/assistant/session/list-tutorial", param);
+				super.request("/assistant/session/show", param);
+				super.checkPanicExists();
+				super.signOut();
+
+				super.signIn("worker1", "worker1");
+				super.request("/assistant/session/show", param);
 				super.checkPanicExists();
 				super.signOut();
 			}

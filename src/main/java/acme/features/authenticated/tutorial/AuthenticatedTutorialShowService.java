@@ -41,7 +41,7 @@ public class AuthenticatedTutorialShowService extends AbstractService<Authentica
 
 		id = super.getRequest().getData("id", int.class);
 		tutorial = this.repository.findOneTutorialById(id);
-		status = tutorial != null && tutorial.getCourse().isPublished();
+		status = tutorial != null && tutorial.getCourse().isPublished() && tutorial.isPublished();
 
 		super.getResponse().setAuthorised(status);
 	}

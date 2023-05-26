@@ -18,20 +18,17 @@ import acme.roles.Assistant;
 import spamfilter.SpamFilter;
 
 @Service
-public class AssistantSessionCreateService extends AbstractService<Assistant, Session> {
-	// Internal state ---------------------------------------------------------
+public class AssistantSessionUpdateService extends AbstractService<Assistant, Session> {
 
 	@Autowired
 	protected AssistantSessionRepository repository;
-
-	// AbstractService interface ----------------------------------------------
 
 
 	@Override
 	public void check() {
 		boolean status;
 
-		status = super.getRequest().hasData("masterId", int.class);
+		status = super.getRequest().hasData("id", int.class);
 
 		super.getResponse().setChecked(status);
 	}
@@ -39,11 +36,11 @@ public class AssistantSessionCreateService extends AbstractService<Assistant, Se
 	@Override
 	public void authorise() {
 		boolean status;
-		int masterId;
+		int sessionId;
 		Tutorial tutorial;
 
-		masterId = super.getRequest().getData("masterId", int.class);
-		tutorial = this.repository.findOneTutorialById(masterId);
+		sessionId = super.getRequest().getData("id", int.class);
+		tutorial = this.repository.findOneTutorialBySessionId(sessionId);
 		status = tutorial != null && tutorial.isPublished() && super.getRequest().getPrincipal().hasRole(tutorial.getAssistant());
 
 		super.getResponse().setAuthorised(status);
@@ -52,20 +49,10 @@ public class AssistantSessionCreateService extends AbstractService<Assistant, Se
 	@Override
 	public void load() {
 		Session object;
-		int masterId;
-		Tutorial tutorial;
+		int id;
 
-		masterId = super.getRequest().getData("masterId", int.class);
-		tutorial = this.repository.findOneTutorialById(masterId);
-
-		object = new Session();
-		object.setTitle("");
-		object.setResume("");
-		object.setSessionType(null);
-		object.setPeriodStart(new Date());
-		object.setPeriodEnd(new Date());
-		object.setInformation("");
-		object.setTutorial(tutorial);
+		id = super.getRequest().getData("id", int.class);
+		object = this.repository.findOneSessionById(id);
 
 		super.getBuffer().setData(object);
 	}
@@ -153,5 +140,4 @@ public class AssistantSessionCreateService extends AbstractService<Assistant, Se
 
 		super.getResponse().setData(tuple);
 	}
-
 }

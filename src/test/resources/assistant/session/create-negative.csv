@@ -1,0 +1,8 @@
+tutorialRecordIndex,sessionRecordIndex,title,resume,sessionType,periodStart,periodEnd,information
+1,2,,,---,,,
+1,2,"Create -title Mala fecha","Summary test",THEORYSESSION,2023/02/13 19:39,2023/02/14 21:39,"http://www.example.com/"
+1,2,,"Summary test Combinacion",---,2023/02/13 19:39,2023/02/13 21:39,"http://www.example.com/"
+1,2,"Create -title muchas letras aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","Summary test",THEORYSESSION,2023/02/13 19:39,2023/02/13 21:39,"http://www.example.com/"
+1,2,"Create -title","Summary test",THEORYSESSION,2023/02/13 19:39,2023/02/13 21:39,"Mala url"
+1,2,"Create -title fecha antes","Summary test",THEORYSESSION,2023/02/13 19:39,2023/02/12 21:39,"http://www.example.com/"
+1,2,"Create -title Combinacion de errores",,THEORYSESSION,2021/02/13 19:39,2020/02/13 21:39,"mal"
