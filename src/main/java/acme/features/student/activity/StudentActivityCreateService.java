@@ -57,19 +57,17 @@ public class StudentActivityCreateService extends AbstractService<Student, Activ
 	public void bind(final Activity object) {
 		assert object != null;
 
+		final int enrolmentId = super.getRequest().getData("enrolment", int.class);
+		final Enrolment enrolment = this.repository.findOneEnrolmentById(enrolmentId);
+
 		super.bind(object, "title", "abstract$", "type", "timePeriod", "furtherInformation");
+		object.setEnrolment(enrolment);
 
 	}
 
 	@Override
 	public void validate(final Activity object) {
 		assert object != null;
-
-		final int enrolmentId = super.getRequest().getData("enrolment", int.class);
-		final Enrolment enrolment = this.repository.findOneEnrolmentById(enrolmentId);
-		System.out.println(enrolment);
-		if (!super.getBuffer().getErrors().hasErrors("enrolment"))
-			super.state(enrolment != null, "enrolment", "Enrolment cannot be null");
 
 		// Spam filter
 		String spamTerms = null;
@@ -105,10 +103,6 @@ public class StudentActivityCreateService extends AbstractService<Student, Activ
 	public void perform(final Activity object) {
 		assert object != null;
 
-		final int enrolmentId = super.getRequest().getData("enrolment", int.class);
-		final Enrolment enrolment = this.repository.findOneEnrolmentById(enrolmentId);
-
-		object.setEnrolment(enrolment);
 		this.repository.save(object);
 	}
 
@@ -123,10 +117,11 @@ public class StudentActivityCreateService extends AbstractService<Student, Activ
 		Tuple tuple;
 
 		choices = SelectChoices.from(ActivityType.class, object.getType());
-		choices2 = SelectChoices.from(enrolments, "code", null);
+		choices2 = SelectChoices.from(enrolments, "code", object.getEnrolment());
 
 		tuple = super.unbind(object, "title", "abstract$", "timePeriod", "furtherInformation");
 		tuple.put("type", choices);
+		tuple.put("enrolment", choices2.getSelected().getKey());
 		tuple.put("enrolments", choices2);
 
 		super.getResponse().setData(tuple);
