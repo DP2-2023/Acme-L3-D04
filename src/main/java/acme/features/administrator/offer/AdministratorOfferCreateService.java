@@ -1,8 +1,10 @@
 
 package acme.features.administrator.offer;
 
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -78,6 +80,23 @@ public class AdministratorOfferCreateService extends AbstractService<Administrat
 	@Override
 	public void validate(final Offer object) {
 		assert object != null;
+
+		final Date start = object.getOfferStartDate();
+		final Date end = object.getOfferEndDate();
+
+		final Date minimumStart = MomentHelper.deltaFromCurrentMoment(1, ChronoUnit.DAYS);
+
+		if (start != null && end != null) {
+			final long differenceInMillis = end.getTime() - start.getTime();
+
+			final long differenceInDays = TimeUnit.MILLISECONDS.toDays(differenceInMillis);
+
+			if (!super.getBuffer().getErrors().hasErrors("offerStartDate"))
+				super.state(start.after(minimumStart), "offerStartDate", "administrator.offer.form.error.not.after");
+
+			if (!super.getBuffer().getErrors().hasErrors("offerEndDate"))
+				super.state(differenceInDays >= 7, "offerEndDate", "administrator.offer.form.error.not.period.length");
+		}
 
 		// Spam filter
 		String spamTerms = null;

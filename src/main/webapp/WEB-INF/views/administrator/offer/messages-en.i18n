@@ -35,3 +35,5 @@ administrator.offer.form.button.delete = Delete
 administrator.offer.form.error.spam = You cannot input spam
 administrator.offer.form.error.not-accepted-currency = The input is not in an accepted currency
 administrator.offer.form.error.not-accepted-format = The input is not in an accepted format
+administrator.offer.form.error.not.after = The start date must be one day in the future
+administrator.offer.form.error.not.period.length = The period must be of at least a week
