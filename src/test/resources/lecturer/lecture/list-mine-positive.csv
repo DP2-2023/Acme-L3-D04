@@ -1,0 +1,5 @@
+recordIndex,title,type,isPublished
+3,Test Lecture 1,HANDS_ON,True
+4,Test Lecture 2,HANDS_ON,False,
+5,Test Lecture 3,THEORETICAL,True
+6,Test Lecture 4,THEORETICAL,False

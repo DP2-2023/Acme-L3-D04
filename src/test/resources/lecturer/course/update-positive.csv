@@ -1,0 +1,5 @@
+recordIndex,code,title,abstract$,type,price,furtherInformation,isPublished,convertedPrice
+9,Z 008,"Test Update 1","Test description",HANDS_ON,EUR 10.00,,False,EUR 10.00
+9,Z 008,"Test Update 2","Test description 2",HANDS_ON,EUR 10.00,,False,EUR 10.00
+9,Z 008,"Test Update 3","A",HANDS_ON,USD 10.00,,False,EUR 10.90
+9,Z 008,"Test Update 4","Test description 4",HANDS_ON,GBP 10.00,"http://www.example.com",False,EUR 8.80
