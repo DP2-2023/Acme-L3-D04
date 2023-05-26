@@ -1,0 +1,5 @@
+recordIndex,title,abstract$,learningTime,body,type,furtherInformation,isPublished
+7,"Z Test Create 1","Test description",10.00,"Test body",HANDS_ON,,False
+8,"Z Test Create 2","Test description",10.00,"Test body",THEORETICAL,,False
+9,"Z Test Create 3","Test description",10.00,"Test body",HANDS_ON,,False
+10,"Z Test Create 4","A",10.00,"Test body",THEORETICAL,"http://www.example.com",False
