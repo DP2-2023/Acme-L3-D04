@@ -32,6 +32,7 @@ public class Activity extends AbstractEntity {
 	@Length(max = 75)
 	protected String			abstract$;
 
+	@NotNull
 	protected ActivityType		type;
 
 	protected Double			timePeriod;

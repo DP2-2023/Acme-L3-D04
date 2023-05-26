@@ -13,14 +13,18 @@ student.activity.form.label.abstract$ = Resumen
 student.activity.form.label.type = Tipo
 student.activity.form.label.timePeriod = Periodo de tiempo
 student.activity.form.label.further-information = Más información
-
+student.enrolment.form.label.type = Tipo
+student.enrolment.form.label.enrolment = Matricula
 
 student.activity.form.button.update = Actualizar
 student.activity.form.button.delete = Borrar
 student.activity.form.button.publish = Publicar
 student.activity.form.button.create = Crear
+student.activity.form.error.spam = No puede introducir spam
 
 student.activity.list.label.title = Título
+student.activity.list.label.abstract$ = Resumen
+student.activity.list.label.timePeriod = Periodo de tiempo
 student.activity.list.label.type = Tipo
 student.activity.list.label.timePeriod = Periodo de tiempo
 

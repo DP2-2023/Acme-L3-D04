@@ -14,14 +14,19 @@ student.activity.form.label.type = Type
 student.activity.form.label.timePeriod = Time Period
 student.activity.form.label.further-information = Further information
 student.activity.form.label.finalised = Finalised
+student.enrolment.form.label.type = Type
+student.enrolment.form.label.enrolment = Enrolment
 
 student.activity.form.button.update = Update
 student.activity.form.button.delete = Delete
 student.activity.form.button.publish = Publish
 student.activity.form.button.create = Create
+student.activity.form.error.spam = You cannot input spam
 
 
 student.activity.list.label.title = Title
+student.activity.list.label.abstract$ = Abstract
+student.activity.list.label.timePeriod = Time period
 student.activity.list.label.type = Type
 student.activity.list.label.finalised = Finalised
 

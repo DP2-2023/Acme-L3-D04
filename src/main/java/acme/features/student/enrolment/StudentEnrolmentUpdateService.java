@@ -8,6 +8,7 @@ import acme.entities.enrolments.Enrolment;
 import acme.framework.components.models.Tuple;
 import acme.framework.services.AbstractService;
 import acme.roles.Student;
+import spamfilter.SpamFilter;
 
 @Service
 public class StudentEnrolmentUpdateService extends AbstractService<Student, Enrolment> {
@@ -43,6 +44,7 @@ public class StudentEnrolmentUpdateService extends AbstractService<Student, Enro
 		status = enrolment != null && !enrolment.isFinished() && super.getRequest().getPrincipal().hasRole(student);
 
 		super.getResponse().setAuthorised(status);
+
 	}
 
 	@Override
@@ -67,6 +69,31 @@ public class StudentEnrolmentUpdateService extends AbstractService<Student, Enro
 	@Override
 	public void validate(final Enrolment object) {
 		assert object != null;
+
+		// Spam filter
+		String spamTerms = null;
+		final String spamTermsES = this.repository.findOneConfigByKey("spamTermsES");
+		final String spamTermsEN = this.repository.findOneConfigByKey("spamTermsEN");
+		final Float threshold = Float.valueOf(this.repository.findOneConfigByKey("spamThreshold"));
+
+		if (spamTermsES != null && !spamTermsES.trim().isEmpty()) {
+			spamTerms = spamTermsES;
+			if (spamTermsEN != null && !spamTermsEN.trim().isEmpty())
+				spamTerms = spamTerms + "," + spamTermsEN;
+		} else if (spamTermsEN != null && !spamTermsEN.trim().isEmpty())
+			spamTerms = spamTermsEN;
+
+		if (spamTerms != null && threshold != null) {
+			final SpamFilter spamFilter = new SpamFilter(spamTerms, threshold);
+			final String formError = "student.enrolment.form.error.spam";
+
+			if (!super.getBuffer().getErrors().hasErrors("motivation"))
+				super.state(!spamFilter.isSpam(object.getMotivation()), "motivation", formError);
+
+			if (!super.getBuffer().getErrors().hasErrors("goals"))
+				super.state(!spamFilter.isSpam(object.getGoals()), "goals", formError);
+
+		}
 	}
 
 	@Override

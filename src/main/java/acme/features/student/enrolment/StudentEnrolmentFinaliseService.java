@@ -79,6 +79,9 @@ public class StudentEnrolmentFinaliseService extends AbstractService<Student, En
 	public void validate(final Enrolment object) {
 		assert object != null;
 
+		if (!super.getBuffer().getErrors().hasErrors("creditCard"))
+			super.state(object.getCreditCard() != null, "creditCard", "Credit card cannot be null");
+
 	}
 
 	@Override

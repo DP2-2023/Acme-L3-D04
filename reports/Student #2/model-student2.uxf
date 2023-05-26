@@ -5,7 +5,7 @@
     <id>UMLClass</id>
     <coordinates>
       <x>595</x>
-      <y>567</y>
+      <y>553</y>
       <w>259</w>
       <h>112</h>
     </coordinates>
@@ -27,7 +27,7 @@ Activity
     <id>UMLClass</id>
     <coordinates>
       <x>231</x>
-      <y>175</y>
+      <y>161</y>
       <w>280</w>
       <h>147</h>
     </coordinates>
@@ -53,7 +53,7 @@ StudentDashboard
     <id>UMLClass</id>
     <coordinates>
       <x>595</x>
-      <y>350</y>
+      <y>336</y>
       <w>259</w>
       <h>105</h>
     </coordinates>
@@ -73,7 +73,7 @@ Enrolment
     <id>UMLClass</id>
     <coordinates>
       <x>224</x>
-      <y>350</y>
+      <y>336</y>
       <w>259</w>
       <h>98</h>
     </coordinates>
@@ -93,7 +93,7 @@ Student
     <id>Relation</id>
     <coordinates>
       <x>476</x>
-      <y>392</y>
+      <y>378</y>
       <w>133</w>
       <h>28</h>
     </coordinates>
@@ -106,7 +106,7 @@ m2=1</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>714</x>
-      <y>448</y>
+      <y>434</y>
       <w>35</w>
       <h>133</h>
     </coordinates>
@@ -114,5 +114,34 @@ m2=1</panel_attributes>
 m1=0..n
 m2=1</panel_attributes>
     <additional_attributes>10.0;170.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>630</x>
+      <y>175</y>
+      <w>154</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Entity&gt;&gt;
+Course
+--
+bg=green
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>714</x>
+      <y>238</y>
+      <w>35</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+m1=0..n
+m2=1
+</panel_attributes>
+    <additional_attributes>10.0;140.0;10.0;10.0</additional_attributes>
   </element>
 </diagram>

@@ -24,6 +24,7 @@ import acme.framework.components.jsp.SelectChoices;
 import acme.framework.components.models.Tuple;
 import acme.framework.services.AbstractService;
 import acme.roles.Student;
+import spamfilter.SpamFilter;
 
 @Service
 public class StudentActivityCreateService extends AbstractService<Student, Activity> {
@@ -56,10 +57,6 @@ public class StudentActivityCreateService extends AbstractService<Student, Activ
 	public void bind(final Activity object) {
 		assert object != null;
 
-		final int enrolmentId = super.getRequest().getData("enrolment", int.class);
-		final Enrolment enrolment = this.repository.findOneEnrolmentById(enrolmentId);
-
-		object.setEnrolment(enrolment);
 		super.bind(object, "title", "abstract$", "type", "timePeriod", "furtherInformation");
 
 	}
@@ -68,12 +65,50 @@ public class StudentActivityCreateService extends AbstractService<Student, Activ
 	public void validate(final Activity object) {
 		assert object != null;
 
+		final int enrolmentId = super.getRequest().getData("enrolment", int.class);
+		final Enrolment enrolment = this.repository.findOneEnrolmentById(enrolmentId);
+		System.out.println(enrolment);
+		if (!super.getBuffer().getErrors().hasErrors("enrolment"))
+			super.state(enrolment != null, "enrolment", "Enrolment cannot be null");
+
+		// Spam filter
+		String spamTerms = null;
+		final String spamTermsES = this.repository.findOneConfigByKey("spamTermsES");
+		final String spamTermsEN = this.repository.findOneConfigByKey("spamTermsEN");
+		final Float threshold = Float.valueOf(this.repository.findOneConfigByKey("spamThreshold"));
+
+		if (spamTermsES != null && !spamTermsES.trim().isEmpty()) {
+			spamTerms = spamTermsES;
+			if (spamTermsEN != null && !spamTermsEN.trim().isEmpty())
+				spamTerms = spamTerms + "," + spamTermsEN;
+		} else if (spamTermsEN != null && !spamTermsEN.trim().isEmpty())
+			spamTerms = spamTermsEN;
+
+		if (spamTerms != null && threshold != null) {
+			final SpamFilter spamFilter = new SpamFilter(spamTerms, threshold);
+			final String formError = "student.activity.form.error.spam";
+
+			if (!super.getBuffer().getErrors().hasErrors("title"))
+				super.state(!spamFilter.isSpam(object.getTitle()), "title", formError);
+
+			if (!super.getBuffer().getErrors().hasErrors("abstract$"))
+				super.state(!spamFilter.isSpam(object.getAbstract$()), "abstract$", formError);
+
+			if (!super.getBuffer().getErrors().hasErrors("furtherInformation"))
+				super.state(!spamFilter.isSpam(object.getFurtherInformation()), "furtherInformation", formError);
+
+		}
+
 	}
 
 	@Override
 	public void perform(final Activity object) {
 		assert object != null;
 
+		final int enrolmentId = super.getRequest().getData("enrolment", int.class);
+		final Enrolment enrolment = this.repository.findOneEnrolmentById(enrolmentId);
+
+		object.setEnrolment(enrolment);
 		this.repository.save(object);
 	}
 

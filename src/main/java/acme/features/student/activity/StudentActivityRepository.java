@@ -40,4 +40,7 @@ public interface StudentActivityRepository extends AbstractRepository {
 	@Query("select j from Enrolment j where j.isFinished = true")
 	Collection<Enrolment> findAllEnrolments();
 
+	@Query("select c.value from Config c where c.configKey = :key")
+	String findOneConfigByKey(String key);
+
 }

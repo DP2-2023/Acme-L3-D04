@@ -40,4 +40,7 @@ public interface StudentEnrolmentRepository extends AbstractRepository {
 	@Query("select s from Student s where s.id = :id")
 	Student findOneStudentById(int id);
 
+	@Query("select c.value from Config c where c.configKey = :key")
+	String findOneConfigByKey(String key);
+
 }

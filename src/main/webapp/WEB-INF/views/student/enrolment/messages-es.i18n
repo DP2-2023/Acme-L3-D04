@@ -12,11 +12,14 @@ student.enrolment.list.label.code = Codigo
 student.enrolment.list.label.motivation = Motivacion
 student.enrolment.list.label.goals = Objetivos
 student.enrolment.list.label.workTime = Tiempo de trabajo
+student.enrolment.form.label.creditCard = Tarjeta de credito
+student.enrolment.form.label.holder = Propietario
 
 student.enrolment.form.button.update = Acutalizar
 student.enrolment.form.button.delete = Eliminar
 student.enrolment.form.button.register = Registrar
 student.enrolment.form.button.finalise = Finalizar
+student.enrolment.form.error.spam = No puede introducir spam
 
 
 student.activity.form.label.code = Codigo

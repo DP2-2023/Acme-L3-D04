@@ -20,7 +20,7 @@
 	<jstl:if test="${_command == 'create'}">
 				<acme:input-select code="student.enrolment.form.label.type" path="type" choices="${type}"/>
 	</jstl:if>
-	<acme:input-money code="student.activity.form.label.timePeriod" path="timePeriod"/>
+	<acme:input-textbox code="student.activity.form.label.timePeriod" path="timePeriod"/>
 	<acme:input-url code="student.activity.form.label.further-information" path="furtherInformation"/>
 	<jstl:if test="${_command == 'create'}">
 				<acme:input-select code="student.enrolment.form.label.enrolment" path="enrolment" choices="${enrolments}"/>

@@ -12,11 +12,14 @@ student.enrolment.list.label.code = Code
 student.enrolment.list.label.motivation = Motivation
 student.enrolment.list.label.goals = Goals
 student.enrolment.list.label.workTime = WorkTime
+student.enrolment.form.label.creditCard = Credit Card
+student.enrolment.form.label.holder = Holder
 
 student.enrolment.form.button.update = Update
 student.enrolment.form.button.delete = Delete
 student.enrolment.list.button.register = Register
 student.enrolment.form.button.finalise = Finalise
+student.enrolment.form.error.spam = You cannot input spam
 
 
 student.enrolment.form.label.code = Code

@@ -53,7 +53,7 @@ public class StudentActivityDeleteService extends AbstractService<Student, Activ
 		activity = this.repository.findOneActivityById(masterId);
 		student = this.repository.findOneStudentById(super.getRequest().getPrincipal().getActiveRoleId());
 
-		status = activity != null && student != null;
+		status = activity != null && student != null && activity.getEnrolment().isFinished();
 
 		// Check activity is of student
 		if (status) {

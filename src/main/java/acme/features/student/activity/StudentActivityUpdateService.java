@@ -23,6 +23,7 @@ import acme.framework.components.jsp.SelectChoices;
 import acme.framework.components.models.Tuple;
 import acme.framework.services.AbstractService;
 import acme.roles.Student;
+import spamfilter.SpamFilter;
 
 @Service
 public class StudentActivityUpdateService extends AbstractService<Student, Activity> {
@@ -56,7 +57,7 @@ public class StudentActivityUpdateService extends AbstractService<Student, Activ
 
 		student = this.repository.findOneStudentById(super.getRequest().getPrincipal().getActiveRoleId());
 
-		status = activity != null && student != null;
+		status = activity != null && student != null && activity.getEnrolment().isFinished();
 
 		// Check activity is of student
 		if (status) {
@@ -89,6 +90,34 @@ public class StudentActivityUpdateService extends AbstractService<Student, Activ
 	@Override
 	public void validate(final Activity object) {
 		assert object != null;
+
+		// Spam filter
+		String spamTerms = null;
+		final String spamTermsES = this.repository.findOneConfigByKey("spamTermsES");
+		final String spamTermsEN = this.repository.findOneConfigByKey("spamTermsEN");
+		final Float threshold = Float.valueOf(this.repository.findOneConfigByKey("spamThreshold"));
+
+		if (spamTermsES != null && !spamTermsES.trim().isEmpty()) {
+			spamTerms = spamTermsES;
+			if (spamTermsEN != null && !spamTermsEN.trim().isEmpty())
+				spamTerms = spamTerms + "," + spamTermsEN;
+		} else if (spamTermsEN != null && !spamTermsEN.trim().isEmpty())
+			spamTerms = spamTermsEN;
+
+		if (spamTerms != null && threshold != null) {
+			final SpamFilter spamFilter = new SpamFilter(spamTerms, threshold);
+			final String formError = "student.activity.form.error.spam";
+
+			if (!super.getBuffer().getErrors().hasErrors("title"))
+				super.state(!spamFilter.isSpam(object.getTitle()), "title", formError);
+
+			if (!super.getBuffer().getErrors().hasErrors("abstract$"))
+				super.state(!spamFilter.isSpam(object.getAbstract$()), "abstract$", formError);
+
+			if (!super.getBuffer().getErrors().hasErrors("furtherInformation"))
+				super.state(!spamFilter.isSpam(object.getFurtherInformation()), "furtherInformation", formError);
+
+		}
 
 	}
 
