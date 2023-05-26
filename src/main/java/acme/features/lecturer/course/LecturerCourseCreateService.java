@@ -72,7 +72,7 @@ public class LecturerCourseCreateService extends AbstractService<Lecturer, Cours
 	public void bind(final Course object) {
 		assert object != null;
 
-		super.bind(object, "code", "title", "abstract$", "furtherInformation");
+		super.bind(object, "code", "title", "abstract$", "price", "furtherInformation");
 
 		final int lectureId = super.getRequest().getData("lecture", int.class);
 		final Lecture lecture = this.repository.findOneLectureById(lectureId);

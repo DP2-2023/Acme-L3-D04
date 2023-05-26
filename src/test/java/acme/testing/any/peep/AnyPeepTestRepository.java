@@ -1,5 +1,5 @@
 /*
- * AuthenticatedAnnouncementRepository.java
+ * LecturerCourseTestRepository.java
  *
  * Copyright (C) 2012-2023 Rafael Corchuelo.
  *
@@ -10,26 +10,17 @@
  * they accept any liabilities with respect to them.
  */
 
-package acme.features.administrator.offer;
+package acme.testing.any.peep;
 
 import java.util.Collection;
 
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Repository;
 
-import acme.entities.offers.Offer;
+import acme.entities.peeps.Peep;
 import acme.framework.repositories.AbstractRepository;
 
-@Repository
-public interface AdministratorOfferRepository extends AbstractRepository {
+public interface AnyPeepTestRepository extends AbstractRepository {
 
-	@Query("select o from Offer o where o.id = :id")
-	Offer findOneOfferById(int id);
-
-	@Query("select o from Offer o")
-	Collection<Offer> findRecentOffers();
-
-	@Query("select c.value from Config c where c.configKey = :key")
-	String findOneConfigByKey(String key);
-
+	@Query("select p from Peep p where p.nick = :username")
+	Collection<Peep> findManyPeepsByUsername(String username);
 }

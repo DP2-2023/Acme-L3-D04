@@ -18,3 +18,8 @@ administrator.banner.form.button.update = Actualizar
 administrator.banner.list.button.create = Crear
 administrator.banner.form.button.create = Crear
 administrator.banner.form.button.delete = Eliminar
+
+administrator.banner.form.error.spam = No puede introducir spam
+administrator.banner.form.error.not.after = Debe ser un momento futuro
+administrator.banner.form.error.not.period.length = Debe ser un periodo de al menos una semana
+administrator.banner.form.error.not.null = No debe ser nulo

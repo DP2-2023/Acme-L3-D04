@@ -16,3 +16,5 @@ any.peep.list.label.email = Correo
 any.peep.list.label.link = Enlace
 
 any.peep.list.button.publish = Publicar
+
+any.peep.form.error.spam = No puede introducir spam

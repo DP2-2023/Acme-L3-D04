@@ -21,10 +21,7 @@ class FormatterRegistrar implements WebMvcConfigurer {
 
 	@Override
 	public void addFormatters(final FormatterRegistry registry) {
-		//		MomentFormatter momentFormatter;
 		BooleanFormatter booleanFormatter;
-
-		//		momentFormatter = new MomentFormatter();
 		booleanFormatter = new BooleanFormatter();
 		registry.addFormatter(booleanFormatter);
 	}

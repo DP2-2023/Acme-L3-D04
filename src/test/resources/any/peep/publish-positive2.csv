@@ -1,0 +1,4 @@
+recordIndex,title,nick,message,email,link,user,password
+6,"Z Test title 3","test_nick","test_message","","https://www.text.com/","administrator1","administrator1"
+7,"Z Test title 4","test_nick","test_message","email@example.com","","lecturer1","lecturer1"
+8,"Z Test title 5","test_nick","test_message","","https://www.text.com/","student2","student2"

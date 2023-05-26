@@ -29,4 +29,7 @@ public interface AdministratorBulletinRepository extends AbstractRepository {
 	@Query("select b from Bulletin b")
 	Collection<Bulletin> findRecentBulletins();
 
+	@Query("select c.value from Config c where c.configKey = :key")
+	String findOneConfigByKey(String key);
+
 }
