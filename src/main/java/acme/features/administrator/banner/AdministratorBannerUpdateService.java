@@ -2,8 +2,8 @@
 package acme.features.administrator.banner;
 
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
-import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -66,13 +66,21 @@ public class AdministratorBannerUpdateService extends AbstractService<Administra
 	@Override
 	public void validate(final Banner object) {
 		assert object != null;
+		final Date moment = MomentHelper.getCurrentMoment();
 		final Date start = object.getDisplayPeriodStart();
 		final Date end = object.getDisplayPeriodEnd();
 
-		boolean periodValidation;
+		if (start != null && end != null) {
+			final long differenceInMillis = end.getTime() - start.getTime();
 
-		periodValidation = end.before(DateUtils.addDays(start, 7));
-		super.state(!periodValidation, "periodValidation", "javax.validation.constraints.AssertTrue.message");
+			final long differenceInDays = TimeUnit.MILLISECONDS.toDays(differenceInMillis);
+
+			if (!super.getBuffer().getErrors().hasErrors("displayPeriodStart"))
+				super.state(start.after(moment), "displayPeriodStart", "administrator.banner.form.error.not.after");
+
+			if (!super.getBuffer().getErrors().hasErrors("displayPeriodEnd"))
+				super.state(differenceInDays >= 7, "displayPeriodEnd", "administrator.banner.form.error.not.period.length");
+		}
 
 		// Spam filter
 		String spamTerms = null;
