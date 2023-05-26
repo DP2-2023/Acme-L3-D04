@@ -8,13 +8,23 @@
 # purposes.  The copyright owner does not offer any warranties or representations, nor do
 # they accept any liabilities with respect to them.
 
-student.enrolment.form.label.code = Código
-student.enrolment.form.label.motivation = Motivación
-student.enrolment.form.label.goals = Metas
-student.enrolment.form.label.workTime = Tiempo de trabajo
-
-
-student.enrolment.list.label.code = Código
-student.enrolment.list.label.motivation = Motivación
-student.enrolment.list.label.goals = Metas
+student.enrolment.list.label.code = Codigo
+student.enrolment.list.label.motivation = Motivacion
+student.enrolment.list.label.goals = Objetivos
 student.enrolment.list.label.workTime = Tiempo de trabajo
+student.enrolment.form.label.creditCard = Tarjeta de credito
+student.enrolment.form.label.holder = Propietario
+
+student.enrolment.form.button.update = Acutalizar
+student.enrolment.form.button.delete = Eliminar
+student.enrolment.form.button.register = Registrar
+student.enrolment.form.button.finalise = Finalizar
+student.enrolment.form.error.spam = No puede introducir spam
+
+
+student.activity.form.label.code = Codigo
+student.activity.form.label.motivation = Motivacion
+student.activity.form.label.goals = Objetivos
+student.enrolment.form.label.workTime = Tiempo de trabajo
+student.activity.form.button.register = Registrar
+student.enrolment.form.label.course = Curso

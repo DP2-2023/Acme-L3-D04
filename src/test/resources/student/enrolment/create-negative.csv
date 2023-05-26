@@ -1,0 +1,7 @@
+recordIndex,code,motivation,goals,workTime,course
+0,,,,,---
+0,Z,"Test Bad Code","Description",2.30,NX 651
+0,Z 013,"","Test Blank motivation",2.30,NX 651
+0,Z 013,"Test goal too long","Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore too long",2.30,NX 651
+0,Z 013,"Test Neg. workTime","Test description",-10.00,NX 651
+0,Z 013,"Test No course","Test description",2.60,---

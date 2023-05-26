@@ -20,4 +20,30 @@
 	<acme:input-textbox code="student.enrolment.form.label.motivation" path="motivation"/>
 	<acme:input-textbox code="student.enrolment.form.label.goals" path="goals"/>
 	<acme:input-double code="student.enrolment.form.label.workTime" path="workTime"/>
+	<jstl:if test="${_command == 'register'}">
+				<acme:input-select code="student.enrolment.form.label.course" path="course" choices="${courses}"/>
+			</jstl:if>	
+	
+	<jstl:if test="${_command == 'finalise'}">
+				<acme:input-textbox code="student.enrolment.form.label.creditCard" path="creditCard"/>
+				<acme:input-textbox code="student.enrolment.form.label.holder" path="holder"/>
+	</jstl:if>
+	<jstl:choose>
+			 
+		<jstl:when test="${acme:anyOf(_command, 'show|update|delete')}">
+			<acme:submit code="student.enrolment.form.button.update" action="/student/enrolment/update"/>
+			<acme:submit code="student.enrolment.form.button.delete" action="/student/enrolment/delete"/>
+			<acme:button code="student.enrolment.form.button.finalise" action="/student/enrolment/finalise?id=${id}"/>
+			
+			
+		</jstl:when>
+		<jstl:when test="${_command == 'register'}">
+			<acme:submit code="student.enrolment.form.button.register" action="/student/enrolment/register"/>
+		</jstl:when>
+		<jstl:when test="${_command == 'finalise'}">
+			<acme:submit code="student.enrolment.form.button.finalise" action="/student/enrolment/finalise"/>
+		</jstl:when>
+				
+	</jstl:choose>
+
 </acme:form>

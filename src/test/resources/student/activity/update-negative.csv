@@ -1,0 +1,7 @@
+recordIndex,title,abstract$,type,timePeriod,furtherInformation
+6,,,,,
+6,"","Test Blank title",THEORICAL,2.3,
+6,"Test Bad URL","Test description",THEORETICAL,2.3,wwwexamplecom
+6,"Test Test Desc. too long","Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore too long",HANDS_ON,4.4,
+6,"Test Neg. timePeriod","Description",THEORICAL,-2.3,
+6,"Test No type","Description",,2.3,"http://www.example.com"

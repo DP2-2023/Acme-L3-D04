@@ -48,7 +48,8 @@ public class StudentEnrolmentListService extends AbstractService<Student, Enrolm
 		Collection<Enrolment> objects;
 		int id;
 
-		id = super.getRequest().getData("id", int.class);
+		//id = super.getRequest().getData("id", int.class);
+		id = super.getRequest().getPrincipal().getActiveRoleId();
 
 		objects = this.repository.findAllEnrolments(id);
 

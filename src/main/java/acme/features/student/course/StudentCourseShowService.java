@@ -86,12 +86,12 @@ public class StudentCourseShowService extends AbstractService<Student, Course> {
 			final Lecturer lecturer = lecture.getLecturer();
 
 			// Agregar los objetos Lecture y Lecturer al Tuple
-			tuple = super.unbind(object, "code", "title", "abstract$", "courseType", "price", "furtherInformation");
+			tuple = super.unbind(object, "code", "title", "abstract$", "type", "price", "furtherInformation");
 			tuple.put("lecture", lecture);
 			tuple.put("lecturer", lecturer);
 		} else
 			// Si no se encuentra el objeto CourseLecture, devolver el Tuple sin agregar los objetos Lecture y Lecturer
-			tuple = super.unbind(object, "code", "title", "abstract$", "courseType", "price", "furtherInformation");
+			tuple = super.unbind(object, "code", "title", "abstract$", "type", "price", "furtherInformation");
 
 		super.getResponse().setData(tuple);
 	}

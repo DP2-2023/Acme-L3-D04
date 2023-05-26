@@ -15,7 +15,6 @@ package acme.features.student.enrolment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import acme.entities.courses.Course;
 import acme.entities.enrolments.Enrolment;
 import acme.framework.components.models.Tuple;
 import acme.framework.services.AbstractService;
@@ -45,22 +44,22 @@ public class StudentEnrolmentShowService extends AbstractService<Student, Enrolm
 	public void authorise() {
 		boolean status;
 		int id;
-		Course Course;
+		Enrolment enrolment;
 
 		id = super.getRequest().getData("id", int.class);
-		Course = this.repository.findOneCourseById(id);
-		status = Course != null && Course.isPublished();
+		enrolment = this.repository.findOneEnrolmentById(id);
+		status = enrolment != null;
 
 		super.getResponse().setAuthorised(status);
 	}
 
 	@Override
 	public void load() {
-		Course object;
+		Enrolment object;
 		int id;
 
 		id = super.getRequest().getData("id", int.class);
-		object = this.repository.findOneCourseById(id);
+		object = this.repository.findOneEnrolmentById(id);
 
 		super.getBuffer().setData(object);
 	}

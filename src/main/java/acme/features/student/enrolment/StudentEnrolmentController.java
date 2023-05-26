@@ -27,10 +27,22 @@ public class StudentEnrolmentController extends AbstractController<Student, Enro
 	// Internal state ---------------------------------------------------------
 
 	@Autowired
-	protected StudentEnrolmentListService	listService;
+	protected StudentEnrolmentListService		listService;
 
 	@Autowired
-	protected StudentEnrolmentShowService	showService;
+	protected StudentEnrolmentShowService		showService;
+
+	@Autowired
+	protected StudentEnrolmentRegisterService	registerService;
+
+	@Autowired
+	protected StudentEnrolmentUpdateService		updateService;
+
+	@Autowired
+	protected StudentEnrolmentDeleteService		deleteService;
+
+	@Autowired
+	protected StudentEnrolmentFinaliseService	finaliseService;
 
 	// Constructors -----------------------------------------------------------
 
@@ -39,6 +51,10 @@ public class StudentEnrolmentController extends AbstractController<Student, Enro
 	protected void initialise() {
 		super.addBasicCommand("list", this.listService);
 		super.addBasicCommand("show", this.showService);
+		super.addBasicCommand("update", this.updateService);
+		super.addBasicCommand("delete", this.deleteService);
+		super.addCustomCommand("register", "create", this.registerService);
+		super.addCustomCommand("finalise", "update", this.finaliseService);
 	}
 
 }

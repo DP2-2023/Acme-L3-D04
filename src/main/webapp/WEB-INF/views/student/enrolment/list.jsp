@@ -22,3 +22,7 @@
 	<acme:list-column code="student.enrolment.list.label.workTime" path="workTime" width="10%"/>
 	<acme:list-payload path="payload"/>
 </acme:list>
+
+<jstl:if test="${_command == 'list'}">
+	<acme:button code="student.enrolment.list.button.register" action="/student/enrolment/register"/>
+</jstl:if>	
