@@ -47,6 +47,10 @@ public class StudentEnrolmentRegisterService extends AbstractService<Student, En
 	public void bind(final Enrolment object) {
 		assert object != null;
 
+		final int courseId = super.getRequest().getData("course", int.class);
+		final Course course = this.repository.findOneCourseById(courseId);
+
+		object.setCourse(course);
 		super.bind(object, "code", "motivation", "goals", "workTime");
 
 	}
@@ -67,18 +71,16 @@ public class StudentEnrolmentRegisterService extends AbstractService<Student, En
 	@Override
 	public void unbind(final Enrolment object) {
 		assert object != null;
-		int studentId;
 		SelectChoices choices;
 		final Collection<Course> courses;
 		Tuple tuple;
 
-		studentId = super.getRequest().getPrincipal().getActiveRoleId();
-		courses = this.repository.findManyCoursesByStudentId(studentId);
+		courses = this.repository.findAllCourses();
 
-		choices = SelectChoices.from(courses, "title", null);
+		choices = SelectChoices.from(courses, "code", null);
 
 		tuple = super.unbind(object, "code", "motivation", "goals", "workTime");
-		tuple.put("course", choices);
+		tuple.put("courses", choices);
 
 		super.getResponse().setData(tuple);
 	}

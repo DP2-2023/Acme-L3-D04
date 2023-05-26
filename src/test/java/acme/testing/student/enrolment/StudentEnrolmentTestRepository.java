@@ -21,6 +21,6 @@ import acme.framework.repositories.AbstractRepository;
 
 public interface StudentEnrolmentTestRepository extends AbstractRepository {
 
-	@Query("select distinct s from Enrolment e join e.student s where e.student.userAccount.username = :username")
+	@Query("select e from Enrolment e where e.student.userAccount.username = :username")
 	Collection<Enrolment> findManyEnrolmentsByStudentUsername(String username);
 }

@@ -8,17 +8,21 @@
 # purposes.  The copyright owner does not offer any warranties or representations, nor do
 # they accept any liabilities with respect to them.
 
-student.activity.form.label.title = Title
-student.activity.form.label.abstract$ = Abstract
-student.activity.form.label.course-type = Type
-student.activity.form.label.timePeriod = Time Period
-student.activity.form.label.further-information = Further information
-student.activity.form.button.update = Update
-student.activity.form.button.delete = Delete
+student.enrolment.list.label.code = Code
+student.enrolment.list.label.motivation = Motivation
+student.enrolment.list.label.goals = Goals
+student.enrolment.list.label.workTime = WorkTime
+
+student.enrolment.form.button.update = Update
+student.enrolment.form.button.delete = Delete
+student.enrolment.list.button.register = Register
+student.enrolment.form.button.finalise = Finalise
+
+
+student.enrolment.form.label.code = Code
+student.enrolment.form.label.motivation = Motivation
+student.enrolment.form.label.goals = Goals
+student.enrolment.form.label.workTime = WorkTime
+student.enrolment.form.button.register = Register
 student.activity.form.button.register = Register
-
-
-student.activity.list.label.title = Title
-student.activity.list.label.abstract$ = Abstract
-student.activity.list.label.timePeriod = Time Period
-student.activity.list.button.create = Create
+student.enrolment.form.label.course = Course

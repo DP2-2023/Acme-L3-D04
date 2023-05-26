@@ -12,6 +12,8 @@
 
 package acme.features.student.activity;
 
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,40 +36,19 @@ public class StudentActivityCreateService extends AbstractService<Student, Activ
 
 	@Override
 	public void check() {
-		boolean status;
-
-		status = super.getRequest().hasData("id", int.class);
-
-		super.getResponse().setChecked(status);
+		super.getResponse().setChecked(true);
 	}
 
 	@Override
 	public void authorise() {
-		boolean status;
-		int masterId;
-		Enrolment enrolment;
-		final Student student;
-
-		student = this.repository.findOneStudentById(super.getRequest().getPrincipal().getActiveRoleId());
-
-		masterId = super.getRequest().getData("id", int.class);
-		enrolment = this.repository.findOneEnrolmentById(masterId);
-
-		status = enrolment != null && !enrolment.isFinished() && student != null && student.equals(enrolment.getStudent());
-
-		super.getResponse().setAuthorised(status);
+		super.getResponse().setAuthorised(true);
 	}
 
 	@Override
 	public void load() {
 		Activity object;
-		int masterId;
-		Enrolment enrolment;
-
-		masterId = super.getRequest().getData("id", int.class);
-		enrolment = this.repository.findOneEnrolmentById(masterId);
 		object = new Activity();
-		object.setEnrolment(enrolment);
+
 		super.getBuffer().setData(object);
 	}
 
@@ -75,6 +56,10 @@ public class StudentActivityCreateService extends AbstractService<Student, Activ
 	public void bind(final Activity object) {
 		assert object != null;
 
+		final int enrolmentId = super.getRequest().getData("enrolment", int.class);
+		final Enrolment enrolment = this.repository.findOneEnrolmentById(enrolmentId);
+
+		object.setEnrolment(enrolment);
 		super.bind(object, "title", "abstract$", "type", "timePeriod", "furtherInformation");
 
 	}
@@ -95,14 +80,19 @@ public class StudentActivityCreateService extends AbstractService<Student, Activ
 	@Override
 	public void unbind(final Activity object) {
 		assert object != null;
+		final Collection<Enrolment> enrolments;
+		enrolments = this.repository.findAllEnrolments();
 
 		SelectChoices choices;
+		SelectChoices choices2;
 		Tuple tuple;
 
 		choices = SelectChoices.from(ActivityType.class, object.getType());
+		choices2 = SelectChoices.from(enrolments, "code", null);
 
-		tuple = super.unbind(object, "title", "abstract$", "type", "timePeriod", "furtherInformation");
+		tuple = super.unbind(object, "title", "abstract$", "timePeriod", "furtherInformation");
 		tuple.put("type", choices);
+		tuple.put("enrolments", choices2);
 
 		super.getResponse().setData(tuple);
 	}

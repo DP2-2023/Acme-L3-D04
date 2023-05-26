@@ -20,6 +20,9 @@
 	<acme:input-textbox code="student.enrolment.form.label.motivation" path="motivation"/>
 	<acme:input-textbox code="student.enrolment.form.label.goals" path="goals"/>
 	<acme:input-double code="student.enrolment.form.label.workTime" path="workTime"/>
+	<jstl:if test="${_command == 'register'}">
+				<acme:input-select code="student.enrolment.form.label.course" path="course" choices="${courses}"/>
+			</jstl:if>	
 	
 	<jstl:if test="${_command == 'finalise'}">
 				<acme:input-textbox code="student.enrolment.form.label.creditCard" path="creditCard"/>
@@ -32,7 +35,6 @@
 			<acme:submit code="student.enrolment.form.button.delete" action="/student/enrolment/delete"/>
 			<acme:button code="student.enrolment.form.button.finalise" action="/student/enrolment/finalise?id=${id}"/>
 			
-			<acme:button code="student.activity.form.button.create" action="/student/activity/create?id=${id}"/>
 			
 		</jstl:when>
 		<jstl:when test="${_command == 'register'}">

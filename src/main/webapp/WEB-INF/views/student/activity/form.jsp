@@ -1,4 +1,4 @@
-- form.jsp
+<%-- form.jsp
 -
 - Copyright (C) 2012-2023 Rafael Corchuelo.
 -
@@ -17,9 +17,14 @@
 <acme:form>
 	<acme:input-textbox code="student.activity.form.label.title" path="title"/>
 	<acme:input-textarea code="student.activity.form.label.abstract$" path="abstract$"/>
-	<acme:input-textbox code="student.activity.form.label.course-type" path="type"/>
+	<jstl:if test="${_command == 'create'}">
+				<acme:input-select code="student.enrolment.form.label.type" path="type" choices="${type}"/>
+	</jstl:if>
 	<acme:input-money code="student.activity.form.label.timePeriod" path="timePeriod"/>
 	<acme:input-url code="student.activity.form.label.further-information" path="furtherInformation"/>
+	<jstl:if test="${_command == 'create'}">
+				<acme:input-select code="student.enrolment.form.label.enrolment" path="enrolment" choices="${enrolments}"/>
+	</jstl:if>	
 	
 	<jstl:choose>	 
 		<jstl:when test="${acme:anyOf(_command, 'show|update|delete') }">

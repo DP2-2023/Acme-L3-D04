@@ -8,20 +8,21 @@
 # purposes.  The copyright owner does not offer lecturer warranties or representations, nor do
 # they accept lecturer liabilities with respect to them.
 
-student.workbook.form.label.title = Title
-student.workbook.form.label.abstract$ = Abstract
-student.workbook.form.label.type = Type
-student.workbook.form.label.timePeriod = Time Period
-student.workbook.form.label.further-information = Further information
-student.workbook.form.label.published = Published
+student.activity.form.label.title = Title
+student.activity.form.label.abstract$ = Abstract
+student.activity.form.label.type = Type
+student.activity.form.label.timePeriod = Time Period
+student.activity.form.label.further-information = Further information
+student.activity.form.label.finalised = Finalised
 
-student.workbook.form.button.update = Update
-student.workbook.form.button.delete = Delete
-student.workbook.form.button.publish = Publish
-student.workbook.form.button.create = Create
+student.activity.form.button.update = Update
+student.activity.form.button.delete = Delete
+student.activity.form.button.publish = Publish
+student.activity.form.button.create = Create
 
-student.workbook.list.label.title = Title
-student.workbook.list.label.type = Type
-student.workbook.list.label.published = Published
 
-student.workbook.list.button.create = Create
+student.activity.list.label.title = Title
+student.activity.list.label.type = Type
+student.activity.list.label.finalised = Finalised
+
+student.activity.list.button.create = Create

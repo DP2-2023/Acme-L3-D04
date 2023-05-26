@@ -16,9 +16,9 @@
 <%@taglib prefix="acme" uri="http://www.the-acme-framework.org/"%>
 
 <acme:list>
-	<acme:list-column code="student.workbook.list.label.title" path="title" width="80%"/>
-	<acme:list-column code="student.workbook.list.label.abstract$" path="abstract$" width="10%"/>
-	<acme:list-column code="student.workbook.list.label.timePeriod" path="timePeriod" width="10%"/>
+	<acme:list-column code="student.activity.list.label.title" path="title" width="80%"/>
+	<acme:list-column code="student.activity.list.label.abstract$" path="abstract$" width="10%"/>
+	<acme:list-column code="student.activity.list.label.timePeriod" path="timePeriod" width="10%"/>
 	<acme:list-payload path="payload"/>
 </acme:list>
 
