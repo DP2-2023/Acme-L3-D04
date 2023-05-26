@@ -1,0 +1,6 @@
+recordIndex,code,motivation,goals,workTime
+9,Z 008,,,
+9,Z 008,"","Test Blank motivation",9.6
+9,Z 008,"Test Blank goal","",9.6
+9,Z 008,"Test goal too long","Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore too long",2.3
+9,Z 008,"Test Neg. workTime","Test description",-10.00
