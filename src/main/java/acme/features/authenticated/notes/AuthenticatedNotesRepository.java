@@ -22,4 +22,7 @@ public interface AuthenticatedNotesRepository extends AbstractRepository {
 	@Query("SELECT n from Note n WHERE n.moment >= :deadline")
 	Collection<Note> findRecentNotes(Date deadline);
 
+	@Query("select c.value from Config c where c.configKey = :key")
+	String findOneConfigByKey(String key);
+
 }

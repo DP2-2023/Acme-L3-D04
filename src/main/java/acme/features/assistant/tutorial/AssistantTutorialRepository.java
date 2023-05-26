@@ -36,4 +36,7 @@ public interface AssistantTutorialRepository extends AbstractRepository {
 	@Query("select s from Session s where s.tutorial.id = :tutorialId")
 	Collection<Session> findManySessionsByTutorialId(int tutorialId);
 
+	@Query("select c.value from Config c where c.configKey = :key")
+	String findOneConfigByKey(String key);
+
 }

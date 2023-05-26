@@ -12,6 +12,7 @@ import acme.framework.components.jsp.SelectChoices;
 import acme.framework.components.models.Tuple;
 import acme.framework.services.AbstractService;
 import acme.roles.Assistant;
+import spamfilter.SpamFilter;
 
 @Service
 public class AssistantTutorialUpdateService extends AbstractService<Assistant, Tutorial> {
@@ -41,7 +42,7 @@ public class AssistantTutorialUpdateService extends AbstractService<Assistant, T
 		masterId = super.getRequest().getData("id", int.class);
 		tutorial = this.repository.findOneTutorialById(masterId);
 		assistant = tutorial == null ? null : tutorial.getAssistant();
-		status = tutorial != null && super.getRequest().getPrincipal().hasRole(assistant);
+		status = tutorial != null && !tutorial.isPublished() && super.getRequest().getPrincipal().hasRole(assistant);
 
 		super.getResponse().setAuthorised(status);
 	}
@@ -77,6 +78,34 @@ public class AssistantTutorialUpdateService extends AbstractService<Assistant, T
 
 		if (!super.getBuffer().getErrors().hasErrors("estimatedTotalTime"))
 			super.state(object.getEstimatedTotalTime() > 0, "estimatedTotalTime", "assistant.tutorial.form.error.negative-estimatedTotalTime");
+
+		// Spam filter
+		String spamTerms = null;
+		final String spamTermsES = this.repository.findOneConfigByKey("spamTermsES");
+		final String spamTermsEN = this.repository.findOneConfigByKey("spamTermsEN");
+		final Float threshold = Float.valueOf(this.repository.findOneConfigByKey("spamThreshold"));
+
+		if (spamTermsES != null && !spamTermsES.trim().isEmpty()) {
+			spamTerms = spamTermsES;
+			if (spamTermsEN != null && !spamTermsEN.trim().isEmpty())
+				spamTerms = spamTerms + "," + spamTermsEN;
+		} else if (spamTermsEN != null && !spamTermsEN.trim().isEmpty())
+			spamTerms = spamTermsEN;
+
+		if (spamTerms != null && threshold != null) {
+			final SpamFilter spamFilter = new SpamFilter(spamTerms, threshold);
+			final String formError = "assistant.offer.form.error.spam";
+
+			if (!super.getBuffer().getErrors().hasErrors("title"))
+				super.state(!spamFilter.isSpam(object.getTitle()), "title", formError);
+
+			if (!super.getBuffer().getErrors().hasErrors("goals"))
+				super.state(!spamFilter.isSpam(object.getGoals()), "goals", formError);
+
+			if (!super.getBuffer().getErrors().hasErrors("resume"))
+				super.state(!spamFilter.isSpam(object.getResume()), "resume", formError);
+
+		}
 	}
 
 	@Override
@@ -97,7 +126,7 @@ public class AssistantTutorialUpdateService extends AbstractService<Assistant, T
 		courses = this.repository.findAllCourses();
 		choices = SelectChoices.from(courses, "title", object.getCourse());
 
-		tuple = super.unbind(object, "code", "title", "resume", "goals", "estimatedTotalTime");
+		tuple = super.unbind(object, "code", "title", "resume", "goals", "estimatedTotalTime", "isPublished");
 		tuple.put("course", choices.getSelected().getKey());
 		tuple.put("courses", choices);
 

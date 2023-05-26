@@ -16,9 +16,8 @@
 <%@taglib prefix="acme" uri="http://www.the-acme-framework.org/"%>
 
 <acme:list>
-	<acme:list-column code="authenticated.tutorial.list.label.code" path="code" width="10%"/>
-	<acme:list-column code="authenticated.tutorial.list.label.title" path="title" width="10%"/>
-	<acme:list-column code="authenticated.tutorial.list.label.goals" path="goals" width="80%"/>		
+		<acme:list-column code="assistant.tutorial.list.label.code" path="code" width="10%"/>
+	<acme:list-column code="assistant.tutorial.list.label.title" path="title" width="10%"/>
+	<acme:list-column code="assistant.tutorial.list.label.goals" path="goals" width="60%"/>
+	<acme:list-column code="assistant.tutorial.list.label.publish" path="isPublished" width="20%"/>			
 </acme:list>
-
-<acme:button code="authenticated.tutorial.list.button.create" action="/assistant/tutorial/create"/>

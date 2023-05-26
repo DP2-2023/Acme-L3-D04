@@ -4,11 +4,9 @@
 <%@taglib prefix="acme" uri="http://www.the-acme-framework.org/"%>
 
 <acme:list>>
-	<acme:list-column code="authenticated.notes.list.label.title" path="title" width="25%"/>
 	<acme:list-column code="authenticated.notes.list.label.moment" path="moment" width="25%"/>
 	<acme:list-column code="authenticated.notes.list.label.author" path="author" width="25%"/>
-	<acme:list-column code="authenticated.notes.list.label.message" path="message" width="25%"/>
-
+	<acme:list-column code="authenticated.notes.list.label.title" path="title" width="50%"/>
 </acme:list>
 
 

@@ -31,3 +31,9 @@ administrator.offer.list.button.create = Crear
 administrator.offer.form.button.create = Crear
 administrator.offer.form.button.update = Actualizar
 administrator.offer.form.button.delete = Borrar
+
+administrator.offer.form.error.spam = No puede introducir spam
+administrator.offer.form.error.not-accepted-currency = La cantidad introducida no está en una moneda aceptada por el sistema
+administrator.offer.form.error.not-accepted-format = No esta en un formato aceptado
+administrator.offer.form.error.not.after = La fecha de inicio debe estar 1 día en el futuro
+administrator.offer.form.error.not.period.length = Debe ser un periodo de al menos una semana

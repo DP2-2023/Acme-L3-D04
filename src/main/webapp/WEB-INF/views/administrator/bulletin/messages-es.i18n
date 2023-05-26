@@ -24,3 +24,5 @@ administrator.bulletin.list.button.Crear
 
 administrator.bulletin.form.button.create = Crear
 administrator.bulletin.form.label.confirmation = Confirmación
+
+administrator.bulletin.form.error.spam = No puede introducir spam

@@ -72,7 +72,7 @@ public class LecturerCourseCreateService extends AbstractService<Lecturer, Cours
 	public void bind(final Course object) {
 		assert object != null;
 
-		super.bind(object, "code", "title", "abstract$", "furtherInformation");
+		super.bind(object, "code", "title", "abstract$", "price", "furtherInformation");
 
 		final int lectureId = super.getRequest().getData("lecture", int.class);
 		final Lecture lecture = this.repository.findOneLectureById(lectureId);
@@ -113,10 +113,16 @@ public class LecturerCourseCreateService extends AbstractService<Lecturer, Cours
 			super.state(existing == null, "code", "lecturer.course.form.error.duplicated");
 		}
 
+		final Lecturer lecturer;
+		lecturer = this.repository.findOneLecturerById(super.getRequest().getPrincipal().getActiveRoleId());
 		final int lectureId = super.getRequest().getData("lecture", int.class);
 		final Lecture lecture = this.repository.findOneLectureById(lectureId);
+
 		if (!super.getBuffer().getErrors().hasErrors("lecture"))
 			super.state(lecture != null, "lecture", "lecturer.course.form.error.lecture");
+
+		if (!super.getBuffer().getErrors().hasErrors("lecture"))
+			super.state(lecture.getLecturer().equals(lecturer), "lecture", "lecturer.course.form.error.not-your-lecture");
 
 		// Spam filter
 		String spamTerms = null;

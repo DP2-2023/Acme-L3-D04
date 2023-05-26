@@ -16,12 +16,14 @@
 <%@taglib prefix="acme" uri="http://www.the-acme-framework.org/"%>
 
 <acme:form readonly="${readonly}">
-	<acme:input-textbox code="administrator.offer.form.label.moment" path="moment"/>	
+	<jstl:if test="${acme:anyOf(_command, 'show|update|delete')}">
+		<acme:input-moment code="administrator.offer.form.label.moment" path="moment" readonly="true"/>	
+	</jstl:if>
 	<acme:input-textbox code="administrator.offer.form.label.heading" path="heading"/>
 	<acme:input-textarea code="administrator.offer.form.label.summary" path="summary"/>
-	<acme:input-textbox code="administrator.offer.form.label.offerStartDate" path="offerStartDate"/>
-	<acme:input-textbox code="administrator.offer.form.label.offerEndDate" path="offerEndDate"/>
-	<acme:input-double code="administrator.offer.form.label.price" path="price"/>
+	<acme:input-moment code="administrator.offer.form.label.offerStartDate" path="offerStartDate"/>
+	<acme:input-moment code="administrator.offer.form.label.offerEndDate" path="offerEndDate"/>
+	<acme:input-money code="administrator.offer.form.label.price" path="price"/>
 	<acme:input-url code="authenticated.offer.form.label.link" path="link"/>
 
 	<jstl:choose>

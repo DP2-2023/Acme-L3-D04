@@ -84,7 +84,7 @@ public class LecturerCourseUpdateService extends AbstractService<Lecturer, Cours
 	public void bind(final Course object) {
 		assert object != null;
 
-		super.bind(object, "title", "abstract$", "furtherInformation");
+		super.bind(object, "title", "abstract$", "price", "furtherInformation");
 
 		// Currency conversion
 		final Locale locale = super.getRequest().getLocale();
