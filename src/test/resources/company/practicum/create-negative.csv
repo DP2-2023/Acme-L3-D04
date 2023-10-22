@@ -1,0 +1,12 @@
+recordIndex,code,title,abtract$,goals,estimatedTotalTime,course
+0,,,,,,---
+0,CCC000,"Bad code","Summary test","S",100.0,Test Add Lecture
+0,AAA1000,"","Test blank title","test goals",0.5,A
+0,AAA1000,"viagra","","test goals",0.5,A
+0,AAA1000,"Test","Test blank goals","",0.5,A
+0,AAA1000,"Test","Test negative time","test goals",-3,A
+0,AAA1000,"Test","Test blank course","test goals",3,---
+0,,"Test 2 blank","","test goals",3,A
+0,AA00,"Test combination","Test negative time","",-3,A
+0,WWW1000,"Test","Test bad course","test goals",3,NO EXISTE
+0,AAA1000,"qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq","Test mor character title","test goals",3,A
