@@ -12,11 +12,15 @@
 
 package acme.features.authenticated.practicum;
 
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import acme.entities.courses.Course;
 import acme.entities.practicums.Practicum;
 import acme.framework.components.accounts.Authenticated;
+import acme.framework.components.jsp.SelectChoices;
 import acme.framework.components.models.Tuple;
 import acme.framework.services.AbstractService;
 
@@ -44,11 +48,11 @@ public class AuthenticatedPracticumShowService extends AbstractService<Authentic
 	public void authorise() {
 		boolean status;
 		int id;
-		Practicum Practicum;
+		Practicum practicum;
 
 		id = super.getRequest().getData("id", int.class);
-		Practicum = this.repository.findOnePracticumById(id);
-		status = Practicum != null && Practicum.isPublished();
+		practicum = this.repository.findOnePracticumById(id);
+		status = practicum != null && practicum.isPublished();
 
 		super.getResponse().setAuthorised(status);
 	}
@@ -68,11 +72,18 @@ public class AuthenticatedPracticumShowService extends AbstractService<Authentic
 	public void unbind(final Practicum object) {
 		assert object != null;
 
+		Collection<Course> courses;
+		SelectChoices choices;
 		Tuple tuple;
 
-		tuple = super.unbind(object, "code", "title", "abstract$", "goals", "estimatedTotalTime", "course", "company");
+		courses = this.repository.findAllCourses();
 
+		choices = SelectChoices.from(courses, "title", object.getCourse());
+
+		tuple = super.unbind(object, "code", "title", "abstract$", "goals", "estimatedTotalTime");
 		tuple.put("company", object.getCompany().getName());
+		tuple.put("course", choices.getSelected().getKey());
+		tuple.put("courses", choices);
 
 		super.getResponse().setData(tuple);
 	}

@@ -19,4 +19,5 @@
 	<acme:list-column code="authenticated.practicum.list.label.title" path="title" width="50%"/>
 	<acme:list-column code="authenticated.practicum.list.label.goals" path="goals" width="35%"/>
 	<acme:list-column code="authenticated.practicum.list.label.estimatedTotalTime" path="estimatedTotalTime" width="15%"/>
+	<acme:list-payload path="payload"/>
 </acme:list>

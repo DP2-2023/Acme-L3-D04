@@ -46,8 +46,10 @@ public class CompanyPracticumListService extends AbstractService<Company, Practi
 	@Override
 	public void load() {
 		Collection<Practicum> objects;
+		int companyId;
 
-		objects = this.repository.findAllPracticum();
+		companyId = super.getRequest().getPrincipal().getActiveRoleId();
+		objects = this.repository.findPracticumByCompanyId(companyId);
 
 		super.getBuffer().setData(objects);
 	}
@@ -58,7 +60,7 @@ public class CompanyPracticumListService extends AbstractService<Company, Practi
 
 		Tuple tuple;
 
-		tuple = super.unbind(object, "title", "goals", "estimatedTotalTime");
+		tuple = super.unbind(object, "title", "goals", "estimatedTotalTime", "isPublished");
 
 		super.getResponse().setData(tuple);
 	}

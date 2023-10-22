@@ -28,6 +28,9 @@ public interface CompanyPracticumSessionRepository extends AbstractRepository {
 	@Query("select ps from PracticumSession ps where ps.id = :id")
 	PracticumSession findOnePracticumSessionById(int id);
 
+	@Query("select ps from PracticumSession ps where ps.practicum.company.id = :id")
+	Collection<PracticumSession> findPracticumSessionsByCompanyId(int id);
+
 	@Query("select c from Company c where c.id = :id")
 	Company findOneCompanyById(int id);
 
@@ -37,10 +40,16 @@ public interface CompanyPracticumSessionRepository extends AbstractRepository {
 	@Query("select p from Practicum p where p.company.id = :companyId")
 	Collection<Practicum> findManyPracticumByCompanyId(int companyId);
 
-	@Query("select ps from PracticumSession ps where ps.isPublished = true")
-	Collection<PracticumSession> findAllPracticumSession();
-
 	@Query("select ps from PracticumSession ps where ps.isAddendum = true")
 	Collection<PracticumSession> findPracticumAddendumSession();
+
+	@Query("select ps from PracticumSession ps where ps.practicum.id = :masterId")
+	Collection<PracticumSession> findManyPracticumSessionsByMasterId(int masterId);
+
+	@Query("select ps.practicum from PracticumSession ps where ps.id = :id")
+	Practicum findOnePracticumByPracticumSessionId(int id);
+
+	@Query("select c.value from Config c where c.configKey = :key")
+	String findOneConfigByKey(String key);
 
 }

@@ -23,6 +23,7 @@ import acme.framework.components.jsp.SelectChoices;
 import acme.framework.components.models.Tuple;
 import acme.framework.services.AbstractService;
 import acme.roles.Company;
+import spamfilter.SpamFilter;
 
 @Service
 public class CompanyPracticumCreateService extends AbstractService<Company, Practicum> {
@@ -48,16 +49,12 @@ public class CompanyPracticumCreateService extends AbstractService<Company, Prac
 	@Override
 	public void load() {
 		Practicum object;
-		Company Company;
+		Company company;
 
-		final int courseId;
-		final Course course;
-
-		Company = this.repository.findOneCompanyById(super.getRequest().getPrincipal().getActiveRoleId());
+		company = this.repository.findOneCompanyById(super.getRequest().getPrincipal().getActiveRoleId());
 		object = new Practicum();
+		object.setCompany(company);
 		object.setPublished(false);
-
-		object.setCompany(Company);
 
 		super.getBuffer().setData(object);
 	}
@@ -65,14 +62,48 @@ public class CompanyPracticumCreateService extends AbstractService<Company, Prac
 	@Override
 	public void bind(final Practicum object) {
 		assert object != null;
+		int courseId;
+		Course course;
+
+		courseId = super.getRequest().getData("course", int.class);
+		course = this.repository.findOneCourseById(courseId);
 
 		super.bind(object, "code", "title", "abstract$", "goals", "estimatedTotalTime");
+		object.setCourse(course);
 		object.setPublished(false);
 	}
 
 	@Override
 	public void validate(final Practicum object) {
 		assert object != null;
+
+		// Spam filter
+		String spamTerms = null;
+		final String spamTermsES = this.repository.findOneConfigByKey("spamTermsES");
+		final String spamTermsEN = this.repository.findOneConfigByKey("spamTermsEN");
+		final Float threshold = Float.valueOf(this.repository.findOneConfigByKey("spamThreshold"));
+
+		if (spamTermsES != null && !spamTermsES.trim().isEmpty()) {
+			spamTerms = spamTermsES;
+			if (spamTermsEN != null && !spamTermsEN.trim().isEmpty())
+				spamTerms = spamTerms + "," + spamTermsEN;
+		} else if (spamTermsEN != null && !spamTermsEN.trim().isEmpty())
+			spamTerms = spamTermsEN;
+
+		if (spamTerms != null && threshold != null) {
+			final SpamFilter spamFilter = new SpamFilter(spamTerms, threshold);
+			final String formError = "assistant.offer.form.error.spam";
+
+			if (!super.getBuffer().getErrors().hasErrors("title"))
+				super.state(!spamFilter.isSpam(object.getTitle()), "title", formError);
+
+			if (!super.getBuffer().getErrors().hasErrors("abstract$"))
+				super.state(!spamFilter.isSpam(object.getAbstract$()), "abstract$", formError);
+
+			if (!super.getBuffer().getErrors().hasErrors("goals"))
+				super.state(!spamFilter.isSpam(object.getGoals()), "goals", formError);
+
+		}
 
 	}
 
@@ -89,11 +120,9 @@ public class CompanyPracticumCreateService extends AbstractService<Company, Prac
 
 		SelectChoices choices;
 		Tuple tuple;
-
 		Collection<Course> courses;
 
 		courses = this.repository.findAllCourses();
-
 		choices = SelectChoices.from(courses, "title", object.getCourse());
 
 		tuple = super.unbind(object, "code", "title", "abstract$", "goals", "estimatedTotalTime", "isPublished");

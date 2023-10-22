@@ -16,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import acme.entities.practicumSessions.PracticumSession;
-import acme.entities.practicums.Practicum;
 import acme.framework.components.models.Tuple;
 import acme.framework.services.AbstractService;
 import acme.roles.Company;
@@ -44,16 +43,12 @@ public class CompanyPracticumSessionDeleteService extends AbstractService<Compan
 	@Override
 	public void authorise() {
 		boolean status;
-		int masterId;
+		int practicumSessionid;
 		PracticumSession practicumSession;
-		final Practicum practicum;
 
-		practicum = this.repository.findOnePracticumById(super.getRequest().getPrincipal().getActiveRoleId());
-
-		masterId = super.getRequest().getData("id", int.class);
-		practicumSession = this.repository.findOnePracticumSessionById(masterId);
-
-		status = practicumSession != null && !practicumSession.isPublished() && practicum != null;
+		practicumSessionid = super.getRequest().getData("id", int.class);
+		practicumSession = this.repository.findOnePracticumSessionById(practicumSessionid);
+		status = practicumSession != null && super.getRequest().getPrincipal().hasRole(practicumSession.getPracticum().getCompany());
 
 		super.getResponse().setAuthorised(status);
 	}
@@ -73,7 +68,7 @@ public class CompanyPracticumSessionDeleteService extends AbstractService<Compan
 	public void bind(final PracticumSession object) {
 		assert object != null;
 
-		super.bind(object, "code", "title", "abstract$", "price", "furtherInformation");
+		super.bind(object, "code", "title", "abstract$", "sessionStartDate", "sessionEndDate", "link");
 
 	}
 
@@ -95,7 +90,10 @@ public class CompanyPracticumSessionDeleteService extends AbstractService<Compan
 
 		Tuple tuple;
 
-		tuple = super.unbind(object, "title", "abstract$", "sessionStartDate", "sessionEndDate", "link", "isPublished", "isAddendum");
+		tuple = super.unbind(object, "title", "abstract$", "sessionStartDate", "sessionEndDate", "link", "isAddendum");
+		tuple.put("masterId", super.getRequest().getData("masterId", int.class));
+		tuple.put("published", object.getPracticum().isPublished());
+		tuple.put("addendum", object.isAddendum());
 
 		super.getResponse().setData(tuple);
 	}

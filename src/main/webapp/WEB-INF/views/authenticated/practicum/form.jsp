@@ -21,6 +21,6 @@
 	<acme:input-textarea code="authenticated.practicum.form.label.abstract$" path="abstract$"/>
 	<acme:input-textbox code="authenticated.practicum.form.label.goals" path="goals"/>
 	<acme:input-double code="authenticated.practicum.form.label.estimatedTotalTime" path="estimatedTotalTime"/>
-	<acme:input-textbox code="authenticated.practicum.form.label.course" path="course"/>
-	<acme:input-textbox code="authenticated.practicum.form.label.company" path="company"/>
+	<acme:input-select code="authenticated.practicum.form.label.course" path="course" choices="${courses}"/>
+	<acme:input-textbox code="authenticated.practicum.form.label.company" path="company" readonly="true"/>
 </acme:form>

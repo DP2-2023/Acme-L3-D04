@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import acme.entities.courses.Course;
+import acme.entities.practicumSessions.PracticumSession;
 import acme.entities.practicums.Practicum;
 import acme.framework.components.jsp.SelectChoices;
 import acme.framework.components.models.Tuple;
@@ -48,11 +49,11 @@ public class CompanyPracticumShowService extends AbstractService<Company, Practi
 	public void authorise() {
 		boolean status;
 		int id;
-		Practicum Practicum;
+		Practicum practicum;
 
 		id = super.getRequest().getData("id", int.class);
-		Practicum = this.repository.findOnePracticumById(id);
-		status = Practicum != null && Practicum.isPublished();
+		practicum = this.repository.findOnePracticumById(id);
+		status = practicum != null && super.getRequest().getPrincipal().hasRole(practicum.getCompany());
 
 		super.getResponse().setAuthorised(status);
 	}
@@ -72,18 +73,20 @@ public class CompanyPracticumShowService extends AbstractService<Company, Practi
 	public void unbind(final Practicum object) {
 		assert object != null;
 
+		Collection<Course> courses;
 		SelectChoices choices;
 		Tuple tuple;
-
-		Collection<Course> courses;
 
 		courses = this.repository.findAllCourses();
 
 		choices = SelectChoices.from(courses, "title", object.getCourse());
 
+		final Collection<PracticumSession> practicumSessions = this.repository.findManyPracticumsSessionsByPracticumId(object.getId());
 		tuple = super.unbind(object, "code", "title", "abstract$", "goals", "estimatedTotalTime", "isPublished");
+		tuple.put("company", object.getCompany().getName());
 		tuple.put("course", choices.getSelected().getKey());
 		tuple.put("courses", choices);
+		tuple.put("numPracticumSessions", practicumSessions.size());
 
 		super.getResponse().setData(tuple);
 	}

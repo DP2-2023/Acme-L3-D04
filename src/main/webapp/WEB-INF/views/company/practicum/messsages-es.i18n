@@ -13,19 +13,25 @@ company.practicum.form.label.title = Título
 company.practicum.form.label.abstract$ = Resumen
 company.practicum.form.label.goals = Objetivos
 company.practicum.form.label.estimatedTotalTime = Tiempo total estimado
-company.practicum.form.label.is-published = Publicado
+company.practicum.form.label.isPublished = Publicado
 company.practicum.form.label.course = Curso
+company.practicum.form.label.company = Compañía
+company.practicum.form.label.numPracticumSessions = Número de sesiones prácticas
 
 
 company.practicum.list.label.title = Título
 company.practicum.list.label.goals = Objetivos
 company.practicum.list.label.estimatedTotalTime = Tiempo total estimado
 company.practicum.list.label.company = Compañía
+company.practicum.list.label.isPublished = Publicado
 
 company.practicum.list.button.create = Crear
+
+company.practicum.form.error.negative-estimatedTotalTime = El tiempo estimado total tiene que ser positivo
 
 
 company.practicum.form.button.update = Actualizar
 company.practicum.form.button.delete = Borrar
 company.practicum.form.button.publish = Publicar
 company.practicum.form.button.create = Crear
+company.practicum.form.button.practicumSession = Sesión práctica

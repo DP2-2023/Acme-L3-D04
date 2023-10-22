@@ -47,7 +47,7 @@ public class AuthenticatedPracticumListService extends AbstractService<Authentic
 	public void load() {
 		Collection<Practicum> objects;
 
-		objects = this.repository.findAllPracticum();
+		objects = this.repository.findPracticumPublished();
 
 		super.getBuffer().setData(objects);
 	}
@@ -58,9 +58,7 @@ public class AuthenticatedPracticumListService extends AbstractService<Authentic
 
 		Tuple tuple;
 
-		tuple = super.unbind(object, "title", "goals", "estimatedTotalTime", "company");
-
-		tuple.put("company", object.getCompany().getName());
+		tuple = super.unbind(object, "title", "goals", "estimatedTotalTime");
 
 		super.getResponse().setData(tuple);
 	}

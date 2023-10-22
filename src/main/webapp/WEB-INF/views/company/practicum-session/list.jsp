@@ -21,6 +21,5 @@
 	<acme:list-column code="company.practicumSession.list.label.sessionEndDate" path="sessionEndDate" width="20%"/>
 </acme:list>
 
-<jstl:if test="${_command == 'list'}">
-	<acme:button code="company.practicumSession.list.button.create" action="/company/practicum-session/create"/>
-</jstl:if>
+<acme:button test="${showCreate}" code="company.practicumSession.list.button.create" action="/company/practicum-session/create?masterId=${masterId}"/>
+

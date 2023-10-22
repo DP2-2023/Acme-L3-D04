@@ -21,7 +21,8 @@
 	<acme:input-textbox code="assistant.tutorial.list.label.goals" path="goals"/>
 	<acme:input-textbox code="assistant.tutorial.list.label.resume" path="resume"/>
 	<acme:input-double code="assistant.tutorial.form.label.estimatedTotalTime" path="estimatedTotalTime"/>
-	<acme:input-select code="assistant.tutorial.list.label.course-title" path="course" choices="${courses}"/>
+	<acme:input-select code="assistant.tutorial.list.label.course-title"
+		path="course" choices="${courses}" />
 	<jstl:if test="${_command == 'show'}">
 		<acme:input-integer code="assistant.tutorial.form.label.numSessions" path="numSessions" readonly="true"/>
 	</jstl:if>

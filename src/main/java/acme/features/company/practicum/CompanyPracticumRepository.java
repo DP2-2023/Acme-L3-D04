@@ -18,6 +18,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import acme.entities.courses.Course;
+import acme.entities.practicumSessions.PracticumSession;
 import acme.entities.practicums.Practicum;
 import acme.framework.repositories.AbstractRepository;
 import acme.roles.Company;
@@ -27,6 +28,9 @@ public interface CompanyPracticumRepository extends AbstractRepository {
 
 	@Query("select p from Practicum p where p.id = :id")
 	Practicum findOnePracticumById(int id);
+
+	@Query("select p from Practicum p where p.company.id = :id")
+	Collection<Practicum> findPracticumByCompanyId(int id);
 
 	@Query("select c from Company c where c.id = :id")
 	Company findOneCompanyById(int id);
@@ -42,5 +46,14 @@ public interface CompanyPracticumRepository extends AbstractRepository {
 
 	@Query("select cs from Course cs where cs.isPublished = true")
 	Collection<Course> findAllCourses();
+
+	@Query("select c from Company c")
+	Collection<Company> findAllCompanies();
+
+	@Query("select ps from PracticumSession ps where ps.practicum.id = :practicumId")
+	Collection<PracticumSession> findManyPracticumsSessionsByPracticumId(int practicumId);
+
+	@Query("select c.value from Config c where c.configKey = :key")
+	String findOneConfigByKey(String key);
 
 }

@@ -15,6 +15,7 @@ authenticated.practicum.form.label.goals = Goals
 authenticated.practicum.form.label.estimatedTotalTime = Estimated total time
 authenticated.practicum.form.label.course = Course
 authenticated.practicum.form.label.company = Company
+authenticated.practicum.form.label.numPracticumSessions = Number of practicum sessions
 
 authenticated.practicum.list.label.title = Title
 authenticated.practicum.list.label.goals = Start Goals
