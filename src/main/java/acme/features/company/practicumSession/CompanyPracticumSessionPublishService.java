@@ -53,7 +53,7 @@ public class CompanyPracticumSessionPublishService extends AbstractService<Compa
 		masterId = super.getRequest().getData("id", int.class);
 		practicumSession = this.repository.findOnePracticumSessionById(masterId);
 
-		status = practicumSession != null && !practicumSession.isPublished() && practicum != null;
+		status = practicumSession != null && practicum != null;
 
 		super.getResponse().setAuthorised(status);
 	}
@@ -84,8 +84,6 @@ public class CompanyPracticumSessionPublishService extends AbstractService<Compa
 	public void perform(final PracticumSession object) {
 		assert object != null;
 
-		object.setPublished(true);
-
 		this.repository.save(object);
 	}
 
@@ -95,7 +93,7 @@ public class CompanyPracticumSessionPublishService extends AbstractService<Compa
 
 		Tuple tuple;
 
-		tuple = super.unbind(object, "title", "abstract$", "sessionStartDate", "sessionEndDate", "link", "isPublished", "isAddendum");
+		tuple = super.unbind(object, "title", "abstract$", "sessionStartDate", "sessionEndDate", "link", "isAddendum");
 
 		super.getResponse().setData(tuple);
 	}

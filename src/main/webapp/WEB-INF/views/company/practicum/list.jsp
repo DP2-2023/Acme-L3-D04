@@ -16,9 +16,11 @@
 <%@taglib prefix="acme" uri="http://www.the-acme-framework.org/"%>
 
 <acme:list>
-	<acme:list-column code="company.practicum.list.label.title" path="title" width="50%"/>
-	<acme:list-column code="company.practicum.list.label.goals" path="goals" width="35%"/>
+	<acme:list-column code="company.practicum.list.label.title" path="title" width="40%"/>
+	<acme:list-column code="company.practicum.list.label.goals" path="goals" width="30%"/>
 	<acme:list-column code="company.practicum.list.label.estimatedTotalTime" path="estimatedTotalTime" width="15%"/>
+	<acme:list-column code="company.practicum.list.label.isPublished" path="isPublished" width="15%"/>
+	
 </acme:list>
 
 <jstl:if test="${_command == 'list'}">

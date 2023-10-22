@@ -1,0 +1,8 @@
+recordIndex,code,title,abstract$,goals,estimatedTotalTime,course,practicumSessions
+4,,,,,,---,
+4,ZZZ000ASW2,"Test 4 bad code","Summary 1","Some goals",1.5,"A",0
+4,ZZZ0000,"Test 4 bad time","Summary 1","Some goals",-2,"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tem",0
+4,ZZZ0000,"Test 4 combination",,"Some goals update",-2.5,,0
+4,ZZZ0001,"Test 4 blank goals","Summary 1",,1.5,"A",0
+4,ZZZ000ADS,"Test 4 combination 2","Summary 1",,1.5,"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tem",0
+4,ZZZ0000,"Test 4","Summary 1","Some goals",1.5,"No Existe",0

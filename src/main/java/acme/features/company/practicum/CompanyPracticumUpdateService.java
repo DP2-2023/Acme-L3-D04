@@ -18,11 +18,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import acme.entities.courses.Course;
+import acme.entities.practicumSessions.PracticumSession;
 import acme.entities.practicums.Practicum;
 import acme.framework.components.jsp.SelectChoices;
 import acme.framework.components.models.Tuple;
 import acme.framework.services.AbstractService;
 import acme.roles.Company;
+import spamfilter.SpamFilter;
 
 @Service
 public class CompanyPracticumUpdateService extends AbstractService<Company, Practicum> {
@@ -47,12 +49,12 @@ public class CompanyPracticumUpdateService extends AbstractService<Company, Prac
 	@Override
 	public void authorise() {
 		boolean status;
-		int practicumId;
+		int masterId;
 		Practicum practicum;
 		Company company;
 
-		practicumId = super.getRequest().getData("id", int.class);
-		practicum = this.repository.findOnePracticumById(practicumId);
+		masterId = super.getRequest().getData("id", int.class);
+		practicum = this.repository.findOnePracticumById(masterId);
 
 		company = practicum == null ? null : practicum.getCompany();
 		status = practicum != null && !practicum.isPublished() && super.getRequest().getPrincipal().hasRole(company);
@@ -74,14 +76,52 @@ public class CompanyPracticumUpdateService extends AbstractService<Company, Prac
 	@Override
 	public void bind(final Practicum object) {
 		assert object != null;
+		int courseId;
+		Course course;
 
-		super.bind(object, "title", "abstract$", "learningTime", "body", "type", "furtherInformation");
+		courseId = super.getRequest().getData("course", int.class);
 
+		course = this.repository.findOneCourseById(courseId);
+
+		super.bind(object, "code", "title", "abstract$", "goals", "estimatedTotalTime");
+		object.setCourse(course);
+		object.setPublished(false);
 	}
 
 	@Override
 	public void validate(final Practicum object) {
 		assert object != null;
+
+		if (!super.getBuffer().getErrors().hasErrors("estimatedTotalTime"))
+			super.state(object.getEstimatedTotalTime() > 0, "estimatedTotalTime", "assistant.tutorial.form.error.negative-estimatedTotalTime");
+
+		// Spam filter
+		String spamTerms = null;
+		final String spamTermsES = this.repository.findOneConfigByKey("spamTermsES");
+		final String spamTermsEN = this.repository.findOneConfigByKey("spamTermsEN");
+		final Float threshold = Float.valueOf(this.repository.findOneConfigByKey("spamThreshold"));
+
+		if (spamTermsES != null && !spamTermsES.trim().isEmpty()) {
+			spamTerms = spamTermsES;
+			if (spamTermsEN != null && !spamTermsEN.trim().isEmpty())
+				spamTerms = spamTerms + "," + spamTermsEN;
+		} else if (spamTermsEN != null && !spamTermsEN.trim().isEmpty())
+			spamTerms = spamTermsEN;
+
+		if (spamTerms != null && threshold != null) {
+			final SpamFilter spamFilter = new SpamFilter(spamTerms, threshold);
+			final String formError = "assistant.offer.form.error.spam";
+
+			if (!super.getBuffer().getErrors().hasErrors("title"))
+				super.state(!spamFilter.isSpam(object.getTitle()), "title", formError);
+
+			if (!super.getBuffer().getErrors().hasErrors("goals"))
+				super.state(!spamFilter.isSpam(object.getGoals()), "goals", formError);
+
+			if (!super.getBuffer().getErrors().hasErrors("abstract$"))
+				super.state(!spamFilter.isSpam(object.getAbstract$()), "abstract$", formError);
+
+		}
 
 	}
 
@@ -95,18 +135,21 @@ public class CompanyPracticumUpdateService extends AbstractService<Company, Prac
 	@Override
 	public void unbind(final Practicum object) {
 		assert object != null;
-		SelectChoices choices;
-		Tuple tuple;
 
 		Collection<Course> courses;
+		SelectChoices choices;
+		Tuple tuple;
 
 		courses = this.repository.findAllCourses();
 
 		choices = SelectChoices.from(courses, "title", object.getCourse());
 
+		final Collection<PracticumSession> practicumSessions = this.repository.findManyPracticumsSessionsByPracticumId(object.getId());
 		tuple = super.unbind(object, "code", "title", "abstract$", "goals", "estimatedTotalTime", "isPublished");
+		tuple.put("company", object.getCompany().getName());
 		tuple.put("course", choices.getSelected().getKey());
 		tuple.put("courses", choices);
+		tuple.put("numPracticumSessions", practicumSessions.size());
 
 		super.getResponse().setData(tuple);
 	}

@@ -13,14 +13,18 @@ company.practicum.form.label.title = Title
 company.practicum.form.label.abstract$ = Abstract
 company.practicum.form.label.goals = Goals
 company.practicum.form.label.estimatedTotalTime = Estimated total time
-company.practicum.form.label.is-published = Published
+company.practicum.form.label.isPublished = Published
 company.practicum.form.label.course = Course
+company.practicum.form.label.company = Company
+company.practicum.form.label.numPracticumSessions = Number of practicum sessions
+
 
 
 company.practicum.list.label.title = Title
 company.practicum.list.label.goals = Start Goals
 company.practicum.list.label.estimatedTotalTime = Estimated total time
 company.practicum.list.label.company = Company
+company.practicum.list.label.isPublished = Published
 
 company.practicum.list.button.create = Create
 
@@ -29,6 +33,9 @@ company.practicum.form.button.update = Update
 company.practicum.form.button.delete = Delete
 company.practicum.form.button.publish = Publish
 company.practicum.form.button.create = Create
+company.practicum.form.button.practicumSession = Practicum Session
+
+company.practicuml.form.error.negative-estimatedTotalTime = The estimated total time must be positive
 
 
 

@@ -17,8 +17,11 @@ import java.util.Collection;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import acme.entities.courses.Course;
+import acme.entities.practicumSessions.PracticumSession;
 import acme.entities.practicums.Practicum;
 import acme.framework.repositories.AbstractRepository;
+import acme.roles.Company;
 
 @Repository
 public interface AuthenticatedPracticumRepository extends AbstractRepository {
@@ -26,7 +29,16 @@ public interface AuthenticatedPracticumRepository extends AbstractRepository {
 	@Query("select p from Practicum p where p.id = :id")
 	Practicum findOnePracticumById(int id);
 
+	@Query("select c from Course c")
+	Collection<Course> findAllCourses();
+
+	@Query("select c from Company c")
+	Collection<Company> findAllCompanies();
+
 	@Query("select p from Practicum p where p.isPublished = true")
-	Collection<Practicum> findAllPracticum();
+	Collection<Practicum> findPracticumPublished();
+
+	@Query("select ps from PracticumSession ps where ps.practicum.id = :practicumId")
+	Collection<PracticumSession> findManyPracticumSessionsByPracticumId(int practicumId);
 
 }

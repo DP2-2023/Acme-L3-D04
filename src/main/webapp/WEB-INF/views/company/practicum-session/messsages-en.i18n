@@ -13,7 +13,6 @@ company.practicumSession.form.label.abstract$ = Abstract
 company.practicumSession.form.label.sessionStartDate = Start Date
 company.practicumSession.form.label.sessionEndDate = End Date
 company.practicumSession.form.label.link = Link
-company.practicumSession.form.label.is-published = Published
 company.practicumSession.form.label.is-addendum = Addendum
 company.practicumSession.form.label.practicum = Practicum
 
@@ -26,8 +25,9 @@ company.practicumSession.list.button.create = Create
 
 company.practicumSession.form.button.update = Update
 company.practicumSession.form.button.delete = Delete
-company.practicumSession.form.button.publish = Publish
 company.practicumSession.form.button.create = Create
+company.practicumSession.error.date = The duration of the date must be between 1 and 5 hours.
+company.practicumSession.error.date1 = The start date must be at least one day after the current date.
 
 
 

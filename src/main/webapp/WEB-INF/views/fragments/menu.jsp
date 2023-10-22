@@ -46,7 +46,7 @@
 		</acme:menu-option>
 		
 		<acme:menu-option code="master.menu.authenticated" access="isAuthenticated()">
-			<acme:menu-suboption code="master.menu.authenticated.practicum.list" action="/company/practicum/list"/>	
+			<acme:menu-suboption code="master.menu.authenticated.practicum.list" action="/authenticated/practicum/list"/>	
 			<acme:menu-suboption code="master.menu.authenticated.bulletins.list" action="/authenticated/bulletin/list"/>
 			<acme:menu-suboption code="master.menu.authenticated.offers.list" action="/authenticated/offer/list"/>
 			<acme:menu-suboption code="master.menu.authenticated.tutorial.list" action="/authenticated/tutorial/list" access="!hasRole('Assistant')"/>
@@ -54,10 +54,7 @@
 		</acme:menu-option>
 		
 		<acme:menu-option code="master.menu.company" access="hasRole('Company')">
-			<acme:menu-suboption code="master.menu.company.practicum.list" action="/company/practicum/list"/>	
-			<acme:menu-suboption code="master.menu.company.practicumSession.list" action="/company/practicum-session/list"/>
-			<acme:menu-separator/>
-			<acme:menu-suboption code="master.menu.company.dashboard" action="/company/company-dashboard/show"/>			
+			<acme:menu-suboption code="master.menu.company.practicum.list" action="/company/practicum/list"/>			
 		</acme:menu-option>
 
 		<acme:menu-option code="master.menu.provider" access="hasRole('Provider')">

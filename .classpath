@@ -55,11 +55,11 @@
 			<attribute name="optional" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry combineaccessrules="false" kind="src" path="/Acme-Framework-23.4.1">
+	<classpathentry combineaccessrules="false" kind="src" path="/Acme-SpamFilter"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Acme-Framework-23.5.0">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry combineaccessrules="false" kind="src" path="/Acme-SpamFilter"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
